@@ -331,6 +331,3 @@ export default function Frame_shopify() {
     </div>
   );
 }
-
-
-

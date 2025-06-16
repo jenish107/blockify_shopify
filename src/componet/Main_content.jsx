@@ -34,6 +34,13 @@ import {
   BlogIcon,
   CaretDownIcon,
   ChevronRightIcon,
+  AlertTriangleIcon,
+  ShieldCheckMarkIcon,
+  CheckIcon,
+  XIcon,
+  ShieldPersonIcon,
+  StoreIcon,
+  CreditCardSecureIcon,
 } from "@shopify/polaris-icons";
 
 import {
@@ -474,6 +481,240 @@ export default function Main_content() {
                     </Box>
                   );
                 })}
+              </Box>
+            </LegacyCard>
+            <LegacyCard
+              title="Promotions"
+              sectioned
+              actions={[
+                {
+                  content: <Icon source={XIcon} tone="base" />,
+                },
+              ]}
+            >
+              <Layout>
+                <Layout.Section variant="oneHalf">
+                  <LegacyCard
+                    title={
+                      <InlineStack>
+                        <Box>
+                          <Icon tone="warning" source={AlertTriangleIcon} />
+                        </Box>
+                        <Text>You might not know this!</Text>
+                      </InlineStack>
+                    }
+                    sectioned
+                  >
+                    <LegacyCard.Section
+                      title="
+                        Did you know that PayPal and Stripe can hold your funds
+                        and limit your account?"
+                    >
+                      <Text>
+                        <InlineStack>
+                          <Box>
+                            <Icon tone="warning" source={AlertTriangleIcon} />
+                          </Box>
+                          They can hold your funds for up to 21 days
+                        </InlineStack>
+                      </Text>
+                      <Text>
+                        <InlineStack>
+                          <Box>
+                            <Icon tone="warning" source={AlertTriangleIcon} />
+                          </Box>
+                          Limit your accounts
+                        </InlineStack>
+                      </Text>
+                      <Text>
+                        <InlineStack>
+                          <Box>
+                            <Icon tone="warning" source={AlertTriangleIcon} />
+                          </Box>
+                          Ban your account permanently
+                        </InlineStack>
+                      </Text>
+                      <Box paddingBlockStart="100">
+                        PayPal or Stripe may randomly check if your orders are
+                        being delivered.
+                      </Box>
+                    </LegacyCard.Section>
+                  </LegacyCard>
+                </Layout.Section>
+                <Layout.Section variant="oneHalf">
+                  <LegacyCard>
+                    <LegacyCard.Header
+                      title={
+                        <InlineStack>
+                          <Box>
+                            <Icon source={ShieldCheckMarkIcon} tone="base" />
+                          </Box>
+                          <Text>You might not know this!</Text>
+                        </InlineStack>
+                      }
+                    >
+                      <Badge tone="success">Fulfilled</Badge>
+                    </LegacyCard.Header>
+                    <LegacyCard.Section sectioned>
+                      <LegacyCard.Section
+                        title="Strong PayPal or Stripe account looks like this:"
+                        sectioned
+                      >
+                        <Box>
+                          <InlineStack>
+                            <Box>
+                              {" "}
+                              <Icon source={CheckIcon} tone="base" />
+                            </Box>{" "}
+                            No random holds or bans
+                          </InlineStack>
+                        </Box>
+                        <Box>
+                          <InlineStack>
+                            <Box>
+                              {" "}
+                              <Icon source={CheckIcon} tone="base" />
+                            </Box>
+                            Fewer chargebacks and holds
+                          </InlineStack>
+                        </Box>
+                        <Box>
+                          <InlineStack>
+                            <Box>
+                              {" "}
+                              <Icon source={CheckIcon} tone="base" />
+                            </Box>
+                            A better relationship between PayPal and Stripe
+                          </InlineStack>
+                        </Box>
+                        <Box>
+                          You can automate this by sending proof of delivery to
+                          PayPal using Synctrack.
+                        </Box>
+                      </LegacyCard.Section>
+                      <Button fullWidth>
+                        Yes, help me strengthen my account
+                      </Button>
+                    </LegacyCard.Section>
+                  </LegacyCard>
+                </Layout.Section>
+              </Layout>
+            </LegacyCard>
+
+            <LegacyCard
+              title={<Badge tone="success">Suggested by experts</Badge>}
+              sectioned
+              actions={[
+                {
+                  content: <Icon source={XIcon} tone="base" />,
+                },
+              ]}
+            >
+              <InlineStack>
+                <Box>
+                  <Icon source={AlertTriangleIcon} tone="base" />
+                </Box>
+                <Text fontWeight="bold">
+                  With growth in sales comes growth in fraud. Here is the solid
+                  fraud prevention strategy you should know
+                </Text>
+              </InlineStack>
+              <Text>
+                With the right tools, you can minimize risks, protect your
+                profits. Focus your energy on growth rather than concerns.
+              </Text>
+              <Box paddingBlockStart="300">
+                <Layout>
+                  <Layout.Section variant="oneHalf">
+                    <LegacyCard
+                      title={
+                        <InlineStack>
+                          <Box>
+                            <Icon source={ShieldPersonIcon} />
+                          </Box>
+                          <Text>Detect and prevent fraudulent activities!</Text>
+                        </InlineStack>
+                      }
+                      sectioned
+                    >
+                      <Text>
+                        Protect your store by analyze store traffic, block
+                        fraudulent access and auto-canceling high-risk orders.
+                      </Text>
+                      <Box paddingBlockStart="500">
+                        <Button>Set up store protection</Button>
+                      </Box>
+                    </LegacyCard>
+                  </Layout.Section>
+
+                  <Layout.Section variant="oneHalf">
+                    <LegacyCard
+                      title={
+                        <InlineStack>
+                          <Box>
+                            <Icon source={StoreIcon} />
+                          </Box>
+                          <Text>Manage fraud, disputes and chargeback</Text>
+                        </InlineStack>
+                      }
+                      sectioned
+                    >
+                      <Text>
+                        Providing delivery proof to PayPal/Stripe helps defend
+                        against disputes and chargebacks & build trust with
+                        payment processor.
+                      </Text>
+                      <Box paddingBlockStart="500">
+                        <Button>Set up payment protection</Button>
+                      </Box>
+                    </LegacyCard>
+                  </Layout.Section>
+                  <Layout.Section variant="oneHalf">
+                    <LegacyCard
+                      title={
+                        <InlineStack>
+                          <Box>
+                            <Icon source={ShieldCheckMarkIcon} />
+                          </Box>
+                          <Text>Comply with global privacy laws</Text>
+                        </InlineStack>
+                      }
+                      sectioned
+                    >
+                      <Text>
+                        If you selling to US, EU, your store is required to ask
+                        consent before gather customer data. Non-compliance can
+                        lead to large fines.
+                      </Text>
+                      <Box paddingBlockStart="500">
+                        <Button>Set up cookie consent</Button>
+                      </Box>
+                    </LegacyCard>
+                  </Layout.Section>
+
+                  <Layout.Section variant="oneHalf">
+                    <LegacyCard
+                      title={
+                        <InlineStack>
+                          <Box>
+                            <Icon source={CreditCardSecureIcon} />
+                          </Box>
+                          <Text>Comply with legal age requirements</Text>
+                        </InlineStack>
+                      }
+                      sectioned
+                    >
+                      <Text>
+                        If you are selling sells age-restricted products then
+                        age verification is a must. Limit age on accessing your
+                        store and checkout.
+                      </Text>
+                      <Box paddingBlockStart="500">
+                        <Button>Set up age verification</Button>
+                      </Box>
+                    </LegacyCard>
+                  </Layout.Section>
+                </Layout>
               </Box>
             </LegacyCard>
           </BlockStack>
