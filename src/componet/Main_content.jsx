@@ -11,6 +11,7 @@ import {
   Badge,
   BlockStack,
   Card,
+  Scrollable,
   LegacyCard,
   Icon,
   InlineStack,
@@ -45,6 +46,7 @@ import {
 import { useState, useCallback } from "react";
 
 import headSingLogo from "../assets/headSing.png";
+import "../style/Main_content.css";
 
 export default function Main_content() {
   const [isBanner, setIsBanner] = useState(true);
@@ -52,7 +54,7 @@ export default function Main_content() {
   const [isPayment, SetIsPayment] = useState(false);
   const [isShipping, SetIsShipping] = useState(false);
 
-  const [answerId, setAnswerId] = useState(1);
+  const [answerId, setAnswerId] = useState(0);
   const questions = [
     {
       id: 1,
@@ -94,12 +96,32 @@ export default function Main_content() {
   );
 
   return (
-    <>
+    <Scrollable shadow style={{ height: "calc(100vh - 58px) " }} focusable>
       <BlockStack gap="500">
-        <Box position="sticky" background="bg-fill-info">
-          <Text variant="headingLg" as="h5" fontWeight="medium">
-            Blockify Checkout
-          </Text>
+        <Box
+          position="sticky"
+          zIndex="500"
+          padding="500"
+          background="bg"
+          insetBlockStart="100"
+          borderColor="border"
+          borderBlockEndWidth="0165"
+        >
+          <InlineStack align="space-between" blockAlign="center">
+            <Text variant="headingLg" as="h5" fontWeight="medium">
+              <InlineStack gap="100">
+                <Thumbnail
+                  size="Small"
+                  source="https://cdn.shopify.com/s/files/applications/ea2ade25c2da95bcb2e4e80b473ec410_200x200.png?1721715498"
+                  alt="Black choker necklace"
+                />
+                Blockify Checkout
+              </InlineStack>
+            </Text>
+            <Button variant="tertiary">
+              <Icon source={MenuHorizontalIcon} tone="base" />
+            </Button>
+          </InlineStack>
         </Box>
         <Page>
           <BlockStack gap="500">
@@ -296,7 +318,7 @@ export default function Main_content() {
               <Divider borderColor="border" />
               <LegacyCard.Section>
                 <Box paddingBlock="500">
-                  <InlineStack gap="400" align="space-between">
+                  <InlineStack align="space-between">
                     <InlineStack gap="400">
                       <InlineStack gap="400">
                         <LuCreditCard size="2.4rem" />
@@ -310,46 +332,49 @@ export default function Main_content() {
                           </Text>
                         </BlockStack>
                       </InlineStack>
-                      <Box onClick={() => SetIsPayment((pre) => !pre)}>
-                        {isPayment ? (
-                          <Icon source={CaretDownIcon} tone="base" />
-                        ) : (
-                          <Icon source={ChevronRightIcon} tone="base" />
-                        )}
-                      </Box>
                     </InlineStack>
-                    {isPayment && (
-                      <Box>
-                        <ButtonGroup>
-                          <Button>
-                            <InlineStack blockAlign="center" gap="100">
-                              <Icon source={HideIcon} tone="base" /> Save
-                            </InlineStack>
-                          </Button>
-                          <Button>
-                            <InlineStack blockAlign="center" gap="100">
-                              <LuArrowDownUp /> Save
-                            </InlineStack>
-                          </Button>
-                          <Button>
-                            <InlineStack blockAlign="center" gap="100">
-                              <Icon source={BlogIcon} tone="base" /> Save
-                            </InlineStack>
-                          </Button>
-                          <Button>
-                            <InlineStack blockAlign="center" gap="100">
-                              <Icon source={ViewIcon} tone="base" /> Save
-                            </InlineStack>
-                          </Button>
-                          <Button>
-                            <InlineStack blockAlign="center" gap="100">
-                              <Icon source={GiftCardFilledIcon} tone="base" />{" "}
-                              Save
-                            </InlineStack>
-                          </Button>
-                        </ButtonGroup>
-                      </Box>
-                    )}
+                    <Box onClick={() => SetIsPayment((pre) => !pre)}>
+                      {isPayment ? (
+                        <Icon source={CaretDownIcon} tone="base" />
+                      ) : (
+                        <Icon source={ChevronRightIcon} tone="base" />
+                      )}
+                    </Box>
+
+                    <Box
+                      id={isPayment ? "show" : "hide"}
+                      paddingInlineStart="1000"
+                      paddingBlockStart={isShipping ? "300" : ""}
+                    >
+                      <ButtonGroup>
+                        <Button>
+                          <InlineStack blockAlign="center" gap="100">
+                            <Icon source={HideIcon} tone="base" /> Save
+                          </InlineStack>
+                        </Button>
+                        <Button>
+                          <InlineStack blockAlign="center" gap="100">
+                            <LuArrowDownUp /> Save
+                          </InlineStack>
+                        </Button>
+                        <Button>
+                          <InlineStack blockAlign="center" gap="100">
+                            <Icon source={BlogIcon} tone="base" /> Save
+                          </InlineStack>
+                        </Button>
+                        <Button>
+                          <InlineStack blockAlign="center" gap="100">
+                            <Icon source={ViewIcon} tone="base" /> Save
+                          </InlineStack>
+                        </Button>
+                        <Button>
+                          <InlineStack blockAlign="center" gap="100">
+                            <Icon source={GiftCardFilledIcon} tone="base" />{" "}
+                            Save
+                          </InlineStack>
+                        </Button>
+                      </ButtonGroup>
+                    </Box>
                   </InlineStack>
                 </Box>
               </LegacyCard.Section>
@@ -357,7 +382,7 @@ export default function Main_content() {
               <Divider borderColor="border" />
               <LegacyCard.Section>
                 <Box paddingBlock="500">
-                  <InlineStack gap="400" align="space-between">
+                  <InlineStack align="space-between">
                     <InlineStack gap="400" align="space-between">
                       <LuPackage2 size="2.4rem" />
                       <BlockStack>
@@ -369,80 +394,87 @@ export default function Main_content() {
                           (cart total, cart quantity,...)
                         </Text>
                       </BlockStack>
-                      <Box onClick={() => SetIsShipping((pre) => !pre)}>
-                        {isShipping ? (
-                          <Icon source={CaretDownIcon} tone="base" />
-                        ) : (
-                          <Icon source={ChevronRightIcon} tone="base" />
-                        )}
-                      </Box>
                     </InlineStack>
-                    {isShipping && (
-                      <Box>
-                        <ButtonGroup>
-                          <Button>
-                            <InlineStack blockAlign="center" gap="100">
-                              <Icon source={HideIcon} tone="base" /> Save
-                            </InlineStack>
-                          </Button>
-                          <Button>
-                            <InlineStack blockAlign="center" gap="100">
-                              <LuArrowDownUp /> Save
-                            </InlineStack>
-                          </Button>
-                          <Button>
-                            <InlineStack blockAlign="center" gap="100">
-                              <Icon source={BlogIcon} tone="base" /> Save
-                            </InlineStack>
-                          </Button>
-                          <Button>
-                            <InlineStack blockAlign="center" gap="100">
-                              <Icon source={ViewIcon} tone="base" /> Save
-                            </InlineStack>
-                          </Button>
-                          <Button>
-                            <InlineStack blockAlign="center" gap="100">
-                              <Icon source={GiftCardFilledIcon} tone="base" />{" "}
-                              Save
-                            </InlineStack>
-                          </Button>
-                        </ButtonGroup>
-                      </Box>
-                    )}
+                    <Box onClick={() => SetIsShipping((pre) => !pre)}>
+                      {isShipping ? (
+                        <Icon source={CaretDownIcon} tone="base" />
+                      ) : (
+                        <Icon source={ChevronRightIcon} tone="base" />
+                      )}
+                    </Box>
+                    <Box
+                      id={isShipping ? "show" : "hide"}
+                      paddingInlineStart="1000"
+                      paddingBlockStart={isShipping ? "300" : ""}
+                    >
+                      <ButtonGroup>
+                        <Button>
+                          <InlineStack blockAlign="center" gap="100">
+                            <Icon source={HideIcon} tone="base" /> Save
+                          </InlineStack>
+                        </Button>
+                        <Button>
+                          <InlineStack blockAlign="center" gap="100">
+                            <LuArrowDownUp /> Save
+                          </InlineStack>
+                        </Button>
+                        <Button>
+                          <InlineStack blockAlign="center" gap="100">
+                            <Icon source={BlogIcon} tone="base" /> Save
+                          </InlineStack>
+                        </Button>
+                        <Button>
+                          <InlineStack blockAlign="center" gap="100">
+                            <Icon source={ViewIcon} tone="base" /> Save
+                          </InlineStack>
+                        </Button>
+                        <Button>
+                          <InlineStack blockAlign="center" gap="100">
+                            <Icon source={GiftCardFilledIcon} tone="base" />{" "}
+                            Save
+                          </InlineStack>
+                        </Button>
+                      </ButtonGroup>
+                    </Box>
                   </InlineStack>
                 </Box>
               </LegacyCard.Section>
             </LegacyCard>
             <LegacyCard title="Frequently Ask Questions" Section>
-              {questions.map((currQue, index) => {
-                return (
-                  <Box key={index}>
-                    <Box
-                      onClick={() => {
-                        setAnswerId(currQue.id);
-                      }}
-                      padding="400"
-                      paddingBlock="200"
-                    >
-                      <Card>
-                        <Box>{currQue.question}</Box>
-                      </Card>
-                    </Box>
-                    {answerId === currQue.id && (
-                      <Box paddingInline="600">
+              <Box paddingBlockEnd="300">
+                {questions.map((currQue, index) => {
+                  return (
+                    <Box key={index}>
+                      <Box
+                        onClick={(pre) => {
+                          currQue.id == pre
+                            ? setAnswerId(0)
+                            : setAnswerId(currQue.id);
+                        }}
+                        padding="400"
+                        paddingBlock="200"
+                      >
+                        <Card>
+                          <Box>{currQue.question}</Box>
+                        </Card>
+                      </Box>
+                      <Box
+                        paddingInline="600"
+                        id={answerId === currQue.id ? "show" : "hide"}
+                      >
                         <Box
                           padding="500"
                           borderRadius="200"
                           background="tooltip-tail-down-border"
                           paddingBlock="200"
                         >
-                          <Box>{currQue.question}</Box>
+                          <Box>{currQue.answer}</Box>
                         </Box>
                       </Box>
-                    )}
-                  </Box>
-                );
-              })}
+                    </Box>
+                  );
+                })}
+              </Box>
             </LegacyCard>
           </BlockStack>
           <FooterHelp>
@@ -453,6 +485,6 @@ export default function Main_content() {
           </FooterHelp>
         </Page>
       </BlockStack>
-    </>
+    </Scrollable>
   );
 }
