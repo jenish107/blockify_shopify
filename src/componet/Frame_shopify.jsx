@@ -23,10 +23,18 @@ import {
   HomeIcon,
   OrderIcon,
   ChatIcon,
+  TargetIcon,
+  ProductIcon,
 } from "@shopify/polaris-icons";
+import { BrowserRouter, Routes, Route } from "react-router";
 import { useState, useCallback, useRef } from "react";
 
 import Main_content from "./Main_content";
+import Navigation_bar from "./Navigation_bar";
+import Checkout_rules from "./page/Checkout_rules";
+import Cash_on_Delive from "./page/Cash_on_Delive";
+import Checkout from "./page/Checkout";
+import Settings from "./page/Settings";
 
 export default function Frame_shopify() {
   const defaultState = useRef({
@@ -178,47 +186,26 @@ export default function Frame_shopify() {
     />
   );
 
-  const navigationMarkup = (
-    <Navigation location="/">
-      <Navigation.Section
-        items={[
-          {
-            label: "Back to Shopify",
-            icon: ArrowLeftIcon,
-          },
-        ]}
-      />
-      <Navigation.Section
-        separator
-        title="Jaded Pixel App"
-        items={[
-          {
-            label: "Dashboard",
-            icon: HomeIcon,
-            onClick: toggleIsLoading,
-          },
-          {
-            label: "Jaded Pixel Orders",
-            icon: OrderIcon,
-            onClick: toggleIsLoading,
-          },
-        ]}
-        action={{
-          icon: ChatIcon,
-          accessibilityLabel: "Contact support",
-          onClick: toggleModalActive,
-        }}
-      />
-    </Navigation>
-  );
+  const navigationMarkup = <Navigation_bar />;
 
   const loadingMarkup = isLoading ? <Loading /> : null;
+
+  console.log(window.location.pathname);
 
   const skipToContentTarget = (
     <a id="SkipToContentTarget" ref={skipToContentRef} tabIndex={-1} />
   );
 
-  const actualPageMarkup = <Main_content />;
+  const actualPageMarkup = (
+    <Routes>
+      <Route path="/" element={<Main_content />} />
+      <Route path="/Checkout-rules" element={<Checkout_rules />} />
+      <Route path="/Cash-on-Delive" element={<Cash_on_Delive />} />
+      <Route path="/Cash-on-Delive" element={<Cash_on_Delive />} />
+      <Route path="/Settings" element={<Settings />} />
+    </Routes>
+  );
+  // const actualPageMarkup = <Main_content />;
 
   const loadingPageMarkup = (
     <SkeletonPage>
@@ -278,56 +265,20 @@ export default function Frame_shopify() {
 
   return (
     <div style={{ height: "500px" }}>
-      <AppProvider
-        i18n={{
-          Polaris: {
-            Avatar: {
-              label: "Avatar",
-              labelWithInitials: "Avatar with initials {initials}",
-            },
-            ContextualSaveBar: {
-              save: "Save",
-              discard: "Discard",
-            },
-            TextField: {
-              characterCount: "{count} characters",
-            },
-            TopBar: {
-              toggleMenuLabel: "Toggle menu",
-
-              SearchField: {
-                clearButtonLabel: "Clear",
-                search: "Search",
-              },
-            },
-            Modal: {
-              iFrameTitle: "body markup",
-            },
-            Frame: {
-              skipToContent: "Skip to content",
-              navigationLabel: "Navigation",
-              Navigation: {
-                closeMobileNavigationLabel: "Close navigation",
-              },
-            },
-          },
-        }}
+      <Frame
+        logo={logo}
+        topBar={topBarMarkup}
+        navigation={navigationMarkup}
+        showMobileNavigation={mobileNavigationActive}
+        onNavigationDismiss={toggleMobileNavigationActive}
+        skipToContentTarget={skipToContentRef}
       >
-        <Frame
-          logo={logo}
-          topBar={topBarMarkup}
-          navigation={navigationMarkup}
-          showMobileNavigation={mobileNavigationActive}
-          onNavigationDismiss={toggleMobileNavigationActive}
-          skipToContentTarget={skipToContentRef}
-        >
-          {contextualSaveBarMarkup}
-          {loadingMarkup}
-          {pageMarkup}
-          {toastMarkup}
-          {modalMarkup}
-        </Frame>
-      </AppProvider>
+        {contextualSaveBarMarkup}
+        {loadingMarkup}
+        {pageMarkup}
+        {toastMarkup}
+        {modalMarkup}
+      </Frame>
     </div>
   );
 }

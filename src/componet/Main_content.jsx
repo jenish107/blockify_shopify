@@ -22,6 +22,7 @@ import {
   List,
   ButtonGroup,
   Divider,
+  Collapsible,
 } from "@shopify/polaris";
 import {
   DeleteIcon,
@@ -54,6 +55,8 @@ import { useState, useCallback } from "react";
 
 import headSingLogo from "../assets/headSing.png";
 import "../style/Main_content.css";
+import Header from "./Layout/Header";
+import Footer from "./Layout/Footer";
 
 export default function Main_content() {
   const [isBanner, setIsBanner] = useState(true);
@@ -105,31 +108,7 @@ export default function Main_content() {
   return (
     <Scrollable shadow style={{ height: "calc(100vh - 58px) " }} focusable>
       <BlockStack gap="500">
-        <Box
-          position="sticky"
-          zIndex="500"
-          padding="500"
-          background="bg"
-          insetBlockStart="100"
-          borderColor="border"
-          borderBlockEndWidth="0165"
-        >
-          <InlineStack align="space-between" blockAlign="center">
-            <Text variant="headingLg" as="h5" fontWeight="medium">
-              <InlineStack gap="100">
-                <Thumbnail
-                  size="Small"
-                  source="https://cdn.shopify.com/s/files/applications/ea2ade25c2da95bcb2e4e80b473ec410_200x200.png?1721715498"
-                  alt="Black choker necklace"
-                />
-                Blockify Checkout
-              </InlineStack>
-            </Text>
-            <Button variant="tertiary">
-              <Icon source={MenuHorizontalIcon} tone="base" />
-            </Button>
-          </InlineStack>
-        </Box>
+        <Header />
         <Page>
           <BlockStack gap="500">
             <Text variant="heading3xl" as="h2">
@@ -348,10 +327,14 @@ export default function Main_content() {
                       )}
                     </Box>
 
-                    <Box
-                      id={isPayment ? "show" : "hide"}
-                      paddingInlineStart="1000"
-                      paddingBlockStart={isShipping ? "300" : ""}
+                    <Collapsible
+                      open={isPayment}
+                      id="basic-collapsible"
+                      transition={{
+                        duration: "500ms",
+                        timingFunction: "ease-in-out",
+                      }}
+                      expandOnPrint
                     >
                       <ButtonGroup>
                         <Button>
@@ -381,7 +364,7 @@ export default function Main_content() {
                           </InlineStack>
                         </Button>
                       </ButtonGroup>
-                    </Box>
+                    </Collapsible>
                   </InlineStack>
                 </Box>
               </LegacyCard.Section>
@@ -409,10 +392,14 @@ export default function Main_content() {
                         <Icon source={ChevronRightIcon} tone="base" />
                       )}
                     </Box>
-                    <Box
-                      id={isShipping ? "show" : "hide"}
-                      paddingInlineStart="1000"
-                      paddingBlockStart={isShipping ? "300" : ""}
+                    <Collapsible
+                      open={isShipping}
+                      id="basic-collapsible"
+                      transition={{
+                        duration: "500ms",
+                        timingFunction: "ease-in-out",
+                      }}
+                      expandOnPrint
                     >
                       <ButtonGroup>
                         <Button>
@@ -442,7 +429,7 @@ export default function Main_content() {
                           </InlineStack>
                         </Button>
                       </ButtonGroup>
-                    </Box>
+                    </Collapsible>
                   </InlineStack>
                 </Box>
               </LegacyCard.Section>
@@ -453,8 +440,8 @@ export default function Main_content() {
                   return (
                     <Box key={index}>
                       <Box
-                        onClick={(pre) => {
-                          currQue.id == pre
+                        onClick={() => {
+                          currQue.id === answerId
                             ? setAnswerId(0)
                             : setAnswerId(currQue.id);
                         }}
@@ -465,19 +452,26 @@ export default function Main_content() {
                           <Box>{currQue.question}</Box>
                         </Card>
                       </Box>
-                      <Box
-                        paddingInline="600"
-                        id={answerId === currQue.id ? "show" : "hide"}
+                      <Collapsible
+                        open={answerId === currQue.id}
+                        id="basic-collapsible"
+                        transition={{
+                          duration: "500ms",
+                          timingFunction: "ease-in-out",
+                        }}
+                        expandOnPrint
                       >
-                        <Box
-                          padding="500"
-                          borderRadius="200"
-                          background="tooltip-tail-down-border"
-                          paddingBlock="200"
-                        >
-                          <Box>{currQue.answer}</Box>
+                        <Box paddingInline="600">
+                          <Box
+                            padding="500"
+                            borderRadius="200"
+                            background="tooltip-tail-down-border"
+                            paddingBlock="200"
+                          >
+                            <Box>{currQue.answer}</Box>
+                          </Box>
                         </Box>
-                      </Box>
+                      </Collapsible>
                     </Box>
                   );
                 })}
@@ -718,12 +712,7 @@ export default function Main_content() {
               </Box>
             </LegacyCard>
           </BlockStack>
-          <FooterHelp>
-            Learn more about{" "}
-            <Link url="https://help.shopify.com/manual/orders/fulfill-orders">
-              fulfilling orders
-            </Link>
-          </FooterHelp>
+          <Footer />
         </Page>
       </BlockStack>
     </Scrollable>

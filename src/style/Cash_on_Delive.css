@@ -1,0 +1,7 @@
+#background_liner {
+  background: linear-gradient(to right, rgb(13, 14, 82), rgb(144, 58, 73));
+  color: white;
+}
+#font_Weight_small{
+  font-weight: 100;
+}
