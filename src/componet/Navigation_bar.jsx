@@ -30,6 +30,10 @@ export default function Navigation_bar() {
                 label: "Settings",
               },
               {
+                url: "/Pricing",
+                label: "Pricing",
+              },
+              {
                 url: "#",
                 matches: true,
                 label: "Inventory",
