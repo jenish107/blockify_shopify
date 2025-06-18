@@ -3,7 +3,6 @@ import { Navigation } from "@shopify/polaris";
 import { HomeIcon, ProductIcon } from "@shopify/polaris-icons";
 
 export default function Navigation_bar() {
-  console.log("path--------", window.location.pathname);
   return (
     <Navigation location="/">
       <Navigation.Section

@@ -28,6 +28,10 @@ import {
   PaymentIcon,
   StarFilledIcon,
 } from "@shopify/polaris-icons";
+import React from "react";
+import Slider from "react-slick";
+
+import "../../style/Pricing.css";
 
 import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
@@ -36,6 +40,7 @@ import SliderCard from "./Pricing_slider/SliderCard";
 
 export default function Pricing() {
   const [isPlanFirstButton, setIsPlanFirstButton] = useState(true);
+  const [slideNumber, setSlideNumber] = useState(1);
 
   const sliderData = [
     {
@@ -62,6 +67,30 @@ export default function Pricing() {
 
   const handlePlanClick = () => {
     setIsPlanFirstButton((pre) => !pre);
+  };
+
+  const handleSlideButtonClick = (number) => {
+    setSlideNumber(number);
+  };
+  console.log("Slide number--------", slideNumber);
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    gap: "12px",
+    responsive: [
+      {
+        breakpoint: 768, // mobile
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+    autoplay: true,
+    autoplaySpeed: 2000,
   };
 
   return (
@@ -402,38 +431,33 @@ export default function Pricing() {
                   </Card>
 
                   <Card>
+                    <Box paddingBlockEnd="300">
+
                     <Text variant="headingMd" as="h2">
                       Trusted by merchants
                     </Text>
-
-                    <Box
-                      minHeight="16rem"
-                      position="relative"
-                      background="avatar-four-bg-fill"
-                    >
-                      <Box
-                        position="absolute"
-                        paddingBlockStart="200"
-                        overflowX="hidden"
-                        minWidth="12rem"
-                      >
-                        <InlineStack wrap={false} gap="200">
-                          {sliderData.map((currData, index) => {
-                            return (
-                              <SliderCard key={index} currData={currData} />
-                            );
-                          })}
-                        </InlineStack>
-                      </Box>
                     </Box>
-                    <List type="bullet">
-                      <InlineStack>
-                        <List.Item>1</List.Item>
-                        <List.Item>2</List.Item>
-                        <List.Item>3</List.Item>
-                        <List.Item>4</List.Item>
+
+                    {/* <Box minWidth="100px" maxWidth="200px" overflowX="hidden">
+                      <InlineStack wrap={false}>
+                        <Box position="relative" insetInlineEnd="300">
+                          <InlineStack wrap={false}>
+                            <Card>hello</Card>
+                            <Card>hello</Card>
+                            <Card>hello</Card>
+                            <Card>hello</Card>
+                            <Card>hello</Card>
+                            <Card>hello</Card>
+                          </InlineStack>
+                        </Box>
                       </InlineStack>
-                    </List>
+                    </Box> */}
+
+                    <Slider {...settings}>
+                      {sliderData.map((currData, index) => {
+                        return <SliderCard key={index} currData={currData} />;
+                      })}
+                    </Slider>
                   </Card>
 
                   <Card>
