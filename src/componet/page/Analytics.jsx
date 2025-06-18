@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Card,
+  Divider,
   EmptyState,
   Grid,
   Icon,
@@ -40,13 +41,42 @@ export default function Analytics() {
                 </Button>
               </Box>
 
-              <Grid columns={{ xs: 1, sm: 4, md: 4, lg: 6, xl: 6 }}>
-                <Layout>
-                  <Card>
-                    <Text id="dot_underline">Total sales</Text>
+              <Grid columns={{ xs: 1, sm: 1, md: 3, lg: 3, xl: 3 }}>
+                <Card>
+                  <Text id="dot_underline">Total sales</Text>
+                  <Text variant="headingXl" as="h4">
+                    ₹0
+                  </Text>
+                </Card>
 
-                  </Card>
-                </Layout>
+                <Card>
+                  <Text id="dot_underline">Checkout conversion rate</Text>
+                  <Text variant="heading2xl" as="h3">
+                    0%
+                  </Text>
+
+                  <Box paddingBlock="300">
+                    <BlockStack gap="500">
+                      <Box>
+                        <InlineStack align="space-between">
+                          <Text>Click Added to Checkout</Text>
+                          <Text>0%</Text>
+                        </InlineStack>
+                        <Text tone="subdued">0 clicks</Text>
+                      </Box>
+
+                      <Divider />
+
+                      <Box>
+                        <InlineStack align="space-between">
+                          <Text>Click Added to Checkout</Text>
+                          <Text>0%</Text>
+                        </InlineStack>
+                        <Text tone="subdued">0 clicks</Text>
+                      </Box>
+                    </BlockStack>
+                  </Box>
+                </Card>
               </Grid>
 
               <Layout>

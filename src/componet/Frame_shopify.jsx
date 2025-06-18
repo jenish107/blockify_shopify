@@ -192,8 +192,6 @@ export default function Frame_shopify() {
 
   const loadingMarkup = isLoading ? <Loading /> : null;
 
-  console.log(window.location.pathname);
-
   const skipToContentTarget = (
     <a id="SkipToContentTarget" ref={skipToContentRef} tabIndex={-1} />
   );
