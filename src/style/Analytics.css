@@ -1,0 +1,6 @@
+#dot_underline {
+  border-bottom: 2px dotted rgb(204, 204, 204);
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+}

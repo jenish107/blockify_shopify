@@ -36,6 +36,7 @@ import Cash_on_Delive from "./page/Cash_on_Delive";
 import Checkout from "./page/Checkout";
 import Settings from "./page/Settings";
 import Pricing from "./page/Pricing";
+import Analytics from "./page/Analytics";
 
 export default function Frame_shopify() {
   const defaultState = useRef({
@@ -202,9 +203,10 @@ export default function Frame_shopify() {
       <Route path="/" element={<Main_content />} />
       <Route path="/Checkout-rules" element={<Checkout_rules />} />
       <Route path="/Cash-on-Delive" element={<Cash_on_Delive />} />
-      <Route path="/Cash-on-Delive" element={<Cash_on_Delive />} />
+      <Route path="/Checkout" element={<Checkout />} />
       <Route path="/Settings" element={<Settings />} />
       <Route path="/Pricing" element={<Pricing />} />
+      <Route path="/Analytics" element={<Analytics />} />
     </Routes>
   );
   // const actualPageMarkup = <Main_content />;

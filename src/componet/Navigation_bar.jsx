@@ -23,7 +23,7 @@ export default function Navigation_bar() {
               },
               {
                 url: "/Checkout",
-                label: "Checkout",
+                label: "Checkout Componet",
               },
               {
                 url: "/Settings",
@@ -32,6 +32,10 @@ export default function Navigation_bar() {
               {
                 url: "/Pricing",
                 label: "Pricing",
+              },
+              {
+                url: "/Analytics",
+                label: "Analytics",
               },
               {
                 url: "#",

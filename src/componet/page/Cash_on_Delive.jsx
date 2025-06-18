@@ -33,8 +33,8 @@ export default function Cash_on_Delive() {
           <Page title="Cash on delivery fee" fullWidth={true}>
             <BlockStack gap="500">
               <Card>
-                <Grid gap="200" columns={{ xs: 1, sm: 1, md: 1, lg: 3, xl: 2 }}>
-                  <Grid.Cell columnSpan={{ xs: 1, sm: 2, md: 2, lg: 1, xl: 3 }}>
+                <Grid gap="200" columns={{ xs: 1, sm: 1, md: 1, lg: 3, xl: 3 }}>
+                  <Grid.Cell columnSpan={{ xs: 1, sm: 2, md: 2, lg: 1, xl: 1 }}>
                     <Box maxWidth="300px">
                       <img
                         alt=""
@@ -44,7 +44,7 @@ export default function Cash_on_Delive() {
                       />
                     </Box>
                   </Grid.Cell>
-                  <Grid.Cell columnSpan={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 3 }}>
+                  <Grid.Cell columnSpan={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 2 }}>
                     <Box>
                       <BlockStack gap="400">
                         <Text fontWeight="bold"> Add Cash on Delivery fee</Text>
