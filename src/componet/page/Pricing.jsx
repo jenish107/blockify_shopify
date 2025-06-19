@@ -436,12 +436,13 @@ export default function Pricing() {
                         Trusted by merchants
                       </Text>
                     </Box>
-
-                    <Slider {...settings}>
-                      {sliderData.map((currData, index) => {
-                        return <SliderCard key={index} currData={currData} />;
-                      })}
-                    </Slider>
+                    <Box paddingBlockEnd="400">
+                      <Slider {...settings}>
+                        {sliderData.map((currData, index) => {
+                          return <SliderCard key={index} currData={currData} />;
+                        })}
+                      </Slider>
+                    </Box>
                   </Card>
 
                   <Card>

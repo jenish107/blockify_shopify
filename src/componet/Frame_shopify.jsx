@@ -198,7 +198,7 @@ export default function Frame_shopify() {
 
   const actualPageMarkup = (
     <Routes>
-      <Route path="/" element={<Main_content />} />
+      <Route path="/Blockify-Checkout" element={<Main_content />} />
       <Route path="/Checkout-rules" element={<Checkout_rules />} />
       <Route path="/Cash-on-Delive" element={<Cash_on_Delive />} />
       <Route path="/Checkout" element={<Checkout />} />
