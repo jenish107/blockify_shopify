@@ -15,7 +15,7 @@ export default function Header() {
       zIndex="500"
       padding="500"
       background="bg"
-      insetBlockStart="100"
+      insetBlockStart="0"
       borderColor="border"
       borderBlockEndWidth="0165"
     >
