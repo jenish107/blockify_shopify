@@ -432,26 +432,10 @@ export default function Pricing() {
 
                   <Card>
                     <Box paddingBlockEnd="300">
-
-                    <Text variant="headingMd" as="h2">
-                      Trusted by merchants
-                    </Text>
+                      <Text variant="headingMd" as="h2">
+                        Trusted by merchants
+                      </Text>
                     </Box>
-
-                    {/* <Box minWidth="100px" maxWidth="200px" overflowX="hidden">
-                      <InlineStack wrap={false}>
-                        <Box position="relative" insetInlineEnd="300">
-                          <InlineStack wrap={false}>
-                            <Card>hello</Card>
-                            <Card>hello</Card>
-                            <Card>hello</Card>
-                            <Card>hello</Card>
-                            <Card>hello</Card>
-                            <Card>hello</Card>
-                          </InlineStack>
-                        </Box>
-                      </InlineStack>
-                    </Box> */}
 
                     <Slider {...settings}>
                       {sliderData.map((currData, index) => {

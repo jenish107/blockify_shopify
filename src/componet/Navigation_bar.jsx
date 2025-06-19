@@ -27,7 +27,7 @@ export default function Navigation_bar() {
               {
                 url: "/Checkout",
                 matches: window.location.pathname == "/Checkout" ? true : false,
-                label: "Checkout Componet",
+                label: "Postpurchase customization",
               },
               {
                 url: "/Settings",
