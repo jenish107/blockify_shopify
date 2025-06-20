@@ -8,6 +8,8 @@ export default function Navigation_bar() {
   let navigate = useNavigate();
   const location = useLocation();
 
+  const basePath = "/" + location.pathname.split("/")[1];
+
   const handleNavigationOnClick = (path) => {
     navigate(path);
   };
@@ -20,28 +22,28 @@ export default function Navigation_bar() {
             url: "#",
             onClick: () => handleNavigationOnClick("/Blockify-Checkout"),
             label: "Blockify Checkout",
-            selected: location.pathname == "/Blockify-Checkout",
+            selected: basePath == "/Blockify-Checkout",
             icon: ProductIcon,
             subNavigationItems: [
               {
                 url: "#",
                 onClick: () => handleNavigationOnClick("/Checkout-rules"),
-                matches: location.pathname == "/Checkout-rules",
+                matches: basePath == "/Checkout-rules",
                 label: "Checkout rules",
               },
               {
                 url: "#",
                 onClick: () => handleNavigationOnClick("/Cash-on-Delive"),
-                matches: location.pathname == "/Cash-on-Delive",
+                matches: basePath == "/Cash-on-Delive",
                 label: "Cash on Delive",
               },
               {
                 url: "#",
                 onClick: () => handleNavigationOnClick("/Checkout"),
-                matches: location.pathname == "/Checkout",
+                matches: basePath == "/Checkout",
                 label: (
                   <Text
-                    fontWeight={location.pathname == "/Checkout" ? "bold" : ""}
+                    fontWeight={basePath == "/Checkout" ? "bold" : ""}
                     truncate
                   >
                     Postpurchase customization
@@ -51,20 +53,20 @@ export default function Navigation_bar() {
               {
                 url: "#",
                 onClick: () => handleNavigationOnClick("/Settings"),
-                matches: location.pathname == "/Settings",
+                matches: basePath == "/Settings",
                 label: "Settings",
               },
               {
                 url: "#",
                 onClick: () => handleNavigationOnClick("/Pricing"),
-                matches: location.pathname == "/Pricing",
+                matches: basePath == "/Pricing",
                 label: "Pricing",
               },
               {
                 url: "#",
                 onClick: () => handleNavigationOnClick("/Analytics"),
                 label: "Analytics",
-                matches: location.pathname == "/Analytics",
+                matches: basePath == "/Analytics",
               },
             ],
           },

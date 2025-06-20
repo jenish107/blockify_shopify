@@ -17,6 +17,9 @@ import {
   TextField,
   Toast,
   TopBar,
+  Box,
+  Scrollable,
+  BlockStack,
 } from "@shopify/polaris";
 import {
   ArrowLeftIcon,
@@ -26,7 +29,7 @@ import {
   TargetIcon,
   ProductIcon,
 } from "@shopify/polaris-icons";
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router";
 import { useState, useCallback, useRef } from "react";
 
 import Main_content from "./Main_content";
@@ -37,6 +40,11 @@ import Checkout from "./page/Checkout";
 import Settings from "./page/Settings";
 import Pricing from "./page/Pricing";
 import Analytics from "./page/Analytics";
+import CheckoutCard from "./page/CheckoutCards";
+import Checkout_rules_page from "./page/inner_componet/Checkout_rules_page";
+import Hide_dynamic_payment_buttons from "./page/inner_componet/Hide_dynamic_payment_buttons";
+import Header from "./Layout/Header";
+import Footer from "./Layout/Footer";
 
 export default function Frame_shopify() {
   const defaultState = useRef({
@@ -197,15 +205,15 @@ export default function Frame_shopify() {
   );
 
   const actualPageMarkup = (
-    <Routes>
-      <Route path="/Blockify-Checkout" element={<Main_content />} />
-      <Route path="/Checkout-rules" element={<Checkout_rules />} />
-      <Route path="/Cash-on-Delive" element={<Cash_on_Delive />} />
-      <Route path="/Checkout" element={<Checkout />} />
-      <Route path="/Settings" element={<Settings />} />
-      <Route path="/Pricing" element={<Pricing />} />
-      <Route path="/Analytics" element={<Analytics />} />
-    </Routes>
+    <Scrollable shadow style={{ height: "calc(100vh - 58px) " }} focusable>
+      <BlockStack gap="500">
+        <Header />
+        <Box paddingInline="300">
+          <Outlet />
+          <Footer />
+        </Box>
+      </BlockStack>
+    </Scrollable>
   );
   // const actualPageMarkup = <Main_content />;
 
@@ -266,21 +274,19 @@ export default function Frame_shopify() {
   };
 
   return (
-    <div style={{ height: "500px" }}>
-      <Frame
-        logo={logo}
-        topBar={topBarMarkup}
-        navigation={navigationMarkup}
-        showMobileNavigation={mobileNavigationActive}
-        onNavigationDismiss={toggleMobileNavigationActive}
-        skipToContentTarget={skipToContentRef}
-      >
-        {contextualSaveBarMarkup}
-        {loadingMarkup}
-        {pageMarkup}
-        {toastMarkup}
-        {modalMarkup}
-      </Frame>
-    </div>
+    <Frame
+      logo={logo}
+      topBar={topBarMarkup}
+      navigation={navigationMarkup}
+      showMobileNavigation={mobileNavigationActive}
+      onNavigationDismiss={toggleMobileNavigationActive}
+      skipToContentTarget={skipToContentRef}
+    >
+      {contextualSaveBarMarkup}
+      {loadingMarkup}
+      {pageMarkup}
+      {toastMarkup}
+      {modalMarkup}
+    </Frame>
   );
 }
