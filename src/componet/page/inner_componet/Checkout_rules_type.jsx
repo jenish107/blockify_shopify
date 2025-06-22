@@ -32,7 +32,7 @@ import { useNavigate } from "react-router";
 
 import { useState } from "react";
 
-export default function Checkout_rules_type({title}) {
+export default function Checkout_rules_type({ title }) {
   const [isPayment, SetIsPayment] = useState(false);
   const [isShipping, SetIsShipping] = useState(false);
 
@@ -55,7 +55,14 @@ export default function Checkout_rules_type({title}) {
               </BlockStack>
             </InlineStack>
             <Box>
-              <Button variant="primary">Create Rules</Button>
+              <Button
+                variant="primary"
+                onClick={() =>
+                  navigate("/Blockify-Checkout/Create_checkout_ruls")
+                }
+              >
+                Create Rules
+              </Button>
             </Box>
           </InlineStack>
         </Box>

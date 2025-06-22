@@ -48,14 +48,12 @@ export default function Checkout_rules_page() {
       title="Checkout Rules"
       subtitle="Choose a strategy to protect your stores from fake orders and to satisfy different customer segmentation."
       backAction={{ content: "", onAction: () => navigate(-1) }}
-      fullWidth={true}
     >
       <BlockStack gap="500">
+        <Checkout_rules_type />
         <Text variant="headingLg" as="h5">
           Product page & Cart page
         </Text>
-
-        <Checkout_rules_type />
         <Card>
           <Box paddingBlock="500">
             <InlineStack gap="400">
