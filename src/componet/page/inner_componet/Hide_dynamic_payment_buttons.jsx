@@ -24,110 +24,75 @@ import {
   TextField,
 } from "@shopify/polaris";
 
-import { useNavigate } from "react-router";
-import Footer from "../../Layout/Footer";
-import Header from "../../Layout/Header";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import Cundition_list from "./child_componet/Create_checkout_rules/Cundition_list";
-
 import { SearchIcon, SelectIcon } from "@shopify/polaris-icons";
 
+import { useNavigate } from "react-router";
+import { useCallback, useEffect, useMemo, useState } from "react";
+
+import Cundition_list from "./child_componet/Create_checkout_rules/Cundition_list";
+import currency from "../../../Api/currencies.json";
+
 const StaticBaseCunditionList = {
-  "Most used conditions": [
+  Always: [
     {
-      img: "✉️",
-      name: "Customer email",
-      content: "Based on customer email",
-      opacity: 0.6,
-    },
-    {
-      img: "🛒",
-      name: "Cart total",
-      content: "Base on total o the cart",
-      opacity: 0.6,
-    },
-    {
-      img: "📊",
-      name: "Cart quantity",
-      content: "Based on total quantity items of the cart",
-      opacity: 0.6,
-    },
-  ],
-  Customer: [
-    {
-      img: "📱",
-      name: "Customer email",
-      content: "Based on customer email",
-      opacity: 0.6,
-    },
-    {
-      img: "🏷️",
-      name: "Customer tag",
-      content: "Based on customer tag",
-      opacity: 0.6,
-    },
-    {
-      img: "🟰",
-      name: "Customer total spent",
-      content: "Based on total amount spent",
+      img: "🎯",
+      name: "Always",
+      content: "Always hide the dynamic button when the rule is enabled",
       opacity: 0.6,
     },
   ],
   Cart: [
     {
-      img: "🏷️",
-      name: "Customer email",
-      content: "Based on customer email",
+      img: "🛒",
+      name: "Cart total",
+      content: "Based on total of the cart",
       opacity: 0.6,
     },
     {
-      img: "🎁",
-      name: "Customer email",
-      content: "Based on customer email",
+      img: "📊",
+      name: "Cart quantity",
+      content: "ased on total quantity items of the cart",
       opacity: 0.6,
     },
     {
-      img: "🏷️",
-      name: "Customer email",
-      content: "Based on customer email",
+      img: "📦",
+      name: "Cart contains products",
+      content: "Based on cart contains products",
+      opacity: 0.6,
+    },
+    {
+      img: "🗳️",
+      name: "Cart contains collection",
+      content: "Based on Cart contains collection",
+      opacity: 0.6,
+    },
+    {
+      img: "⚖️",
+      name: "Cart weight",
+      content: "Based on order weight",
       opacity: 0.6,
     },
   ],
-  Product: [
+
+  Customer: [
     {
-      img: "💳",
-      name: "Customer email",
-      content: "Based on customer email",
+      img: "🏷️",
+      name: "Customer tag",
+      content: "Based on Customer tag",
       opacity: 0.6,
     },
   ],
   Market: [
     {
       img: "💵",
-      name: "Customer email",
-      content: "Based on customer email",
-      opacity: 0.6,
-    },
-  ],
-  "Shipping Address": [
-    {
-      img: "👨‍💻",
-      name: "Customer email",
-      content: "Based on customer email",
+      name: "Currency",
+      content: "Based on customer Currency",
       opacity: 0.6,
     },
     {
-      img: "📍",
-      name: "Customer email",
-      content: "Based on customer email",
-      opacity: 0.6,
-    },
-  ],
-  "Date time": [
-    {
-      img: "🕐",
-      name: "Hour",
-      content: "Based on hour",
+      img: "🛍️",
+      name: "Shopify market",
+      content: "Based on Shopify Markets",
       opacity: 0.6,
     },
   ],
@@ -135,16 +100,17 @@ const StaticBaseCunditionList = {
 
 export default function Hide_dynamic_payment_buttons() {
   const [selected, setSelected] = useState("");
-  const [selected2, setSelected2] = useState("Select Position");
+  const [selected2, setSelected2] = useState("Always");
   const [textFieldValues, setTextFieldValues] = useState({});
   const [popoverActive, setPopoverActive] = useState(false);
   const [isShowError, setIsShowError] = useState(false);
   const [baseCunditionList, setBaseCunditionList] = useState(
     StaticBaseCunditionList
   );
+
   const [selectedBaseCundition, setSelectedBaseCundition] = useState({
-    key: "Most used conditions",
-    index: 1,
+    key: "Always",
+    index: 0,
   });
 
   const navigate = useNavigate();
@@ -201,7 +167,6 @@ export default function Hide_dynamic_payment_buttons() {
             </Text>
             <Box>
               <Text fontWeight="bold">
-                {" "}
                 {
                   StaticBaseCunditionList[selectedBaseCundition.key][
                     selectedBaseCundition.index
@@ -209,7 +174,6 @@ export default function Hide_dynamic_payment_buttons() {
                 }
               </Text>
               <Text tone="subdued">
-                {" "}
                 {
                   StaticBaseCunditionList[selectedBaseCundition.key][
                     selectedBaseCundition.index
@@ -239,23 +203,25 @@ export default function Hide_dynamic_payment_buttons() {
               term: "Rule info",
               description: (
                 <Card>
-                  <Text variant="headingMd" as="h6">
-                    Rule status
-                  </Text>
-                  <Select
-                    label="Date range"
-                    options={options}
-                    onChange={handleSelectChange}
-                    value={selected}
-                  />
-                  <Text variant="headingMd" as="h6">
-                    Rule name
-                  </Text>
-                  <TextField
-                    label="For internal use only, not visible to customers."
-                    placeholder="Enter rule name"
-                    autoComplete="off"
-                  />
+                  <BlockStack gap="200">
+                    <Text variant="headingMd" as="h6">
+                      Rule status
+                    </Text>
+                    <Select
+                      label="Date range"
+                      options={options}
+                      onChange={handleSelectChange}
+                      value={selected}
+                    />
+                    <Text variant="headingMd" as="h6">
+                      Rule name
+                    </Text>
+                    <TextField
+                      label="For internal use only, not visible to customers."
+                      placeholder="Enter rule name"
+                      autoComplete="off"
+                    />
+                  </BlockStack>
                 </Card>
               ),
             },
@@ -340,7 +306,7 @@ export default function Hide_dynamic_payment_buttons() {
                       </Popover>
 
                       <Box
-                        visuallyHidden={selected2 !== "Select Position"}
+                        visuallyHidden={selected2 !== "Always"}
                         position="absolute"
                         minHeight="100%"
                         background="bg-fill"
@@ -351,27 +317,20 @@ export default function Hide_dynamic_payment_buttons() {
                       ></Box>
                     </Box>
 
-                    {selected2 !== "Select Position" && (
-                      <InlineStack blockAlign="start">
+                    {selected2 !== "Always" && (
+                      <InlineStack align="start">
                         <Box width="30%" paddingInlineEnd="300">
-                          <Select
-                            requiredIndicator
-                            label="Date range"
-                            options={[
-                              { label: "Is", value: "Is" },
-                              {
-                                label: "Select trigger",
-                                value: "Select trigger",
-                                disabled: true,
-                              },
-                              { label: "Contains", value: "Contains" },
-                              { label: "Not contains", value: "Not contains" },
-                              { label: "Is not", value: "Is not" },
-                              { label: "Regex (Beta)", value: "Regex (Beta)" },
-                            ]}
-                            onChange={handleSelectChange}
-                            value={selected}
-                          />
+                          <BlockStack gap="025">
+                            <Text variant="headingMd">Trigger *</Text>
+                            <Select
+                              options={[
+                                { label: "Is", value: "Is" },
+                                { label: "Is not", value: "Is not" },
+                              ]}
+                              onChange={handleSelectChange}
+                              value={selected}
+                            />
+                          </BlockStack>
                         </Box>
 
                         <Box width="70%">
@@ -395,14 +354,14 @@ export default function Hide_dynamic_payment_buttons() {
 }
 
 function MultiComboboxExample() {
-  const deselectedOptions = useMemo(
-    () => [
-      { value: "rustic", label: "Rustic" },
-      { value: "antique", label: "Antique" },
-      { value: "vinyl", label: "Vinyl" },
-      { value: "vintage", label: "Vintage" },
-      { value: "refurbished", label: "Refurbished" },
-    ],
+  let deselectedOptions = useMemo(
+    () =>
+      currency.map((currItem) => {
+        return {
+          value: currItem.name,
+          label: `${currItem.name} (${currItem.symbol})`,
+        };
+      }),
     []
   );
 
@@ -485,7 +444,6 @@ function MultiComboboxExample() {
     <Box>
       <Text variant="headingMd">Value *</Text>
       <Combobox
-        label="Value"
         allowMultiple
         activator={
           <Combobox.TextField
