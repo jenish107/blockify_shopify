@@ -203,25 +203,23 @@ export default function Hide_dynamic_payment_buttons() {
               term: "Rule info",
               description: (
                 <Card>
-                  <BlockStack gap="200">
-                    <Text variant="headingMd" as="h6">
-                      Rule status
-                    </Text>
-                    <Select
-                      label="Date range"
-                      options={options}
-                      onChange={handleSelectChange}
-                      value={selected}
-                    />
-                    <Text variant="headingMd" as="h6">
-                      Rule name
-                    </Text>
-                    <TextField
-                      label="For internal use only, not visible to customers."
-                      placeholder="Enter rule name"
-                      autoComplete="off"
-                    />
-                  </BlockStack>
+                  <Text variant="headingMd" as="h6">
+                    Rule status
+                  </Text>
+                  <Select
+                    label="Date range"
+                    options={options}
+                    onChange={handleSelectChange}
+                    value={selected}
+                  />
+                  <Text variant="headingMd" as="h6">
+                    Rule name
+                  </Text>
+                  <TextField
+                    label="For internal use only, not visible to customers."
+                    placeholder="Enter rule name"
+                    autoComplete="off"
+                  />
                 </Card>
               ),
             },
@@ -318,19 +316,17 @@ export default function Hide_dynamic_payment_buttons() {
                     </Box>
 
                     {selected2 !== "Always" && (
-                      <InlineStack align="start">
+                      <InlineStack>
                         <Box width="30%" paddingInlineEnd="300">
-                          <BlockStack gap="025">
-                            <Text variant="headingMd">Trigger *</Text>
-                            <Select
-                              options={[
-                                { label: "Is", value: "Is" },
-                                { label: "Is not", value: "Is not" },
-                              ]}
-                              onChange={handleSelectChange}
-                              value={selected}
-                            />
-                          </BlockStack>
+                          <Text variant="headingMd">Trigger *</Text>
+                          <Select
+                            options={[
+                              { label: "Is", value: "Is" },
+                              { label: "Is not", value: "Is not" },
+                            ]}
+                            onChange={handleSelectChange}
+                            value={selected}
+                          />
                         </Box>
 
                         <Box width="70%">

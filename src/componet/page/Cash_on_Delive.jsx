@@ -18,13 +18,14 @@ import {
 } from "@shopify/polaris";
 import { PaymentIcon } from "@shopify/polaris-icons";
 
+import { useNavigate } from "react-router";
+
 import "../../style/Cash_on_Delive.css";
 
-import Header from "../Layout/Header";
-import Footer from "../Layout/Footer";
 import Cash_on_delivery_img1 from "../../assets/Cash_on_delivery_img1.png";
 
 export default function Cash_on_Delive() {
+  const navigate = useNavigate();
   return (
     <Page title="Cash on delivery fee">
       <BlockStack gap="500">
@@ -175,7 +176,11 @@ export default function Cash_on_Delive() {
           <LegacyCard sectioned>
             <EmptyState
               heading="Oops! You don’t have any checkout rules."
-              action={{ content: "+ Add new rule" }}
+              action={{
+                content: "+ Add new rule",
+                onAction: () =>
+                  navigate("/Blockify-Checkout/Cash_on_delivery_fee"),
+              }}
               image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
             >
               <p>Add checkout rules to secure your Checkout now.</p>
