@@ -27,7 +27,7 @@ import {
 import { useNavigate } from "react-router";
 import Footer from "../../Layout/Footer";
 import Header from "../../Layout/Header";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Cundition_list from "./child_componet/Create_checkout_rules/Cundition_list";
 
 import { SearchIcon, SelectIcon } from "@shopify/polaris-icons";
@@ -138,6 +138,7 @@ export default function Hide_dynamic_payment_buttons() {
   const [selected2, setSelected2] = useState("Select Position");
   const [textFieldValues, setTextFieldValues] = useState({});
   const [popoverActive, setPopoverActive] = useState(false);
+  const [isShowError, setIsShowError] = useState(false);
   const [baseCunditionList, setBaseCunditionList] = useState(
     StaticBaseCunditionList
   );
@@ -159,7 +160,9 @@ export default function Hide_dynamic_payment_buttons() {
   ];
 
   const handleSelectChange = useCallback((value) => setSelected(value), []);
-  const handleSelect2Change = useCallback((value) => setSelected2(value), []);
+  const handleSelect2Change = useCallback((value) => {
+    setSelected2(value);
+  }, []);
 
   const togglePopoverActive = useCallback(() => {
     setPopoverActive((popoverActive) => !popoverActive);
@@ -171,6 +174,10 @@ export default function Hide_dynamic_payment_buttons() {
       [event.target.name]: event.target.value,
     }));
   }, []);
+
+  useEffect(() => {
+    setIsShowError(selected2 == "Select Position");
+  }, [selected2]);
 
   const activator = (
     <Box
@@ -268,9 +275,7 @@ export default function Hide_dynamic_payment_buttons() {
                     options={options2}
                     onChange={handleSelect2Change}
                     value={selected2}
-                    error={
-                      selected2 == "Select Position" && "Province is required"
-                    }
+                    error={isShowError && "Province is required"}
                   />
                 </Card>
               ),
@@ -284,83 +289,100 @@ export default function Hide_dynamic_payment_buttons() {
                       Based on condition *
                     </Text>
 
-                    <Popover
-                      active={popoverActive}
-                      activator={activator}
-                      onClose={togglePopoverActive}
-                      ariaHaspopup={false}
-                      sectioned
-                      fullWidth
-                    >
-                      <Popover.Pane>
-                        <Box paddingInline="050">
-                          <Box>
-                            <TextField
-                              prefix={<Icon source={SearchIcon} tone="base" />}
-                              autoComplete="off"
-                              placeholder="Search"
-                              clearButton
-                              name="search"
-                              value={textFieldValues.search}
-                              onChange={handleTextFieldChanged}
-                              onClearButtonClick={() => {}}
-                            />
-                          </Box>
+                    <Box position="relative">
+                      <Popover
+                        active={popoverActive}
+                        activator={activator}
+                        onClose={togglePopoverActive}
+                        ariaHaspopup={false}
+                        sectioned
+                        fullWidth
+                      >
+                        <Popover.Pane>
+                          <Box paddingInline="050">
+                            <Box>
+                              <TextField
+                                prefix={
+                                  <Icon source={SearchIcon} tone="base" />
+                                }
+                                autoComplete="off"
+                                placeholder="Search"
+                                clearButton
+                                name="search"
+                                value={textFieldValues.search}
+                                onChange={handleTextFieldChanged}
+                                onClearButtonClick={() => {}}
+                              />
+                            </Box>
 
-                          <Scrollable style={{ height: "200px" }} focusable>
-                            {Object.keys(baseCunditionList).map(
-                              (currKey, index) => {
-                                return (
-                                  <Cundition_list
-                                    key={index}
-                                    togglePopoverActive={togglePopoverActive}
-                                    currKey={currKey}
-                                    baseCunditionList={baseCunditionList}
-                                    selectedBaseCundition={
-                                      selectedBaseCundition
-                                    }
-                                    setSelectedBaseCundition={
-                                      setSelectedBaseCundition
-                                    }
-                                  />
-                                );
-                              }
-                            )}
-                          </Scrollable>
+                            <Scrollable style={{ height: "200px" }} focusable>
+                              {Object.keys(baseCunditionList).map(
+                                (currKey, index) => {
+                                  return (
+                                    <Cundition_list
+                                      key={index}
+                                      togglePopoverActive={togglePopoverActive}
+                                      currKey={currKey}
+                                      baseCunditionList={baseCunditionList}
+                                      selectedBaseCundition={
+                                        selectedBaseCundition
+                                      }
+                                      setSelectedBaseCundition={
+                                        setSelectedBaseCundition
+                                      }
+                                    />
+                                  );
+                                }
+                              )}
+                            </Scrollable>
+                          </Box>
+                        </Popover.Pane>
+                      </Popover>
+
+                      <Box
+                        visuallyHidden={selected2 !== "Select Position"}
+                        position="absolute"
+                        minHeight="100%"
+                        background="bg-fill"
+                        opacity="0.4"
+                        insetBlockStart="0"
+                        width="100%"
+                        borderRadius="200"
+                      ></Box>
+                    </Box>
+
+                    {selected2 !== "Select Position" && (
+                      <InlineStack blockAlign="start">
+                        <Box width="30%" paddingInlineEnd="300">
+                          <Select
+                            requiredIndicator
+                            label="Date range"
+                            options={[
+                              { label: "Is", value: "Is" },
+                              {
+                                label: "Select trigger",
+                                value: "Select trigger",
+                                disabled: true,
+                              },
+                              { label: "Contains", value: "Contains" },
+                              { label: "Not contains", value: "Not contains" },
+                              { label: "Is not", value: "Is not" },
+                              { label: "Regex (Beta)", value: "Regex (Beta)" },
+                            ]}
+                            onChange={handleSelectChange}
+                            value={selected}
+                          />
                         </Box>
-                      </Popover.Pane>
-                    </Popover>
 
-                    <InlineStack blockAlign="start">
-                      <Box width="30%" paddingInlineEnd="300">
-                        <Select
-                          requiredIndicator
-                          label="Date range"
-                          options={[
-                            { label: "Is", value: "Is" },
-                            {
-                              label: "Select trigger",
-                              value: "Select trigger",
-                              disabled: true,
-                            },
-                            { label: "Contains", value: "Contains" },
-                            { label: "Not contains", value: "Not contains" },
-                            { label: "Is not", value: "Is not" },
-                            { label: "Regex (Beta)", value: "Regex (Beta)" },
-                          ]}
-                          onChange={handleSelectChange}
-                          value={selected}
-                        />
-                      </Box>
-
-                      <Box width="70%">
-                        <InlineStack wrap={false} blockAlign="center">
-                          <Box width="100%">
-                            <MultiComboboxExample />
-                          </Box>
-                        </InlineStack>
-                      </Box>
-                    </InlineStack>
+                        <Box width="70%">
+                          <InlineStack wrap={false} blockAlign="center">
+                            <Box width="100%">
+                              <MultiComboboxExample />
+                            </Box>
+                          </InlineStack>
+                        </Box>
+                      </InlineStack>
+                    )}
                   </BlockStack>
                 </Card>
               ),
@@ -460,7 +482,7 @@ function MultiComboboxExample() {
       : null;
 
   return (
-    <div style={{ height: "225px" }}>
+    <Box>
       <Text variant="headingMd">Value *</Text>
       <Combobox
         label="Value"
@@ -489,6 +511,6 @@ function MultiComboboxExample() {
       <TextContainer>
         <LegacyStack>{tagsMarkup}</LegacyStack>
       </TextContainer>
-    </div>
+    </Box>
   );
 }

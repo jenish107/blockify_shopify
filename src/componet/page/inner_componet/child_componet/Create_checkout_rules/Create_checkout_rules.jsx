@@ -1,9 +1,11 @@
 import {
+  Autocomplete,
   Avatar,
   Badge,
   BlockStack,
   Box,
   Button,
+  CalloutCard,
   Card,
   DescriptionList,
   FormLayout,
@@ -23,16 +25,21 @@ import {
 } from "@shopify/polaris";
 
 import {
+  AlertDiamondIcon,
+  AlertTriangleIcon,
   CaretDownIcon,
   CaretUpIcon,
   CursorIcon,
+  DesktopIcon,
+  MobileIcon,
+  PlusCircleIcon,
   SearchIcon,
   SelectIcon,
   StarFilledIcon,
 } from "@shopify/polaris-icons";
 
 import { useNavigate } from "react-router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Cundition_list from "./Cundition_list";
 
 const StaticBaseCunditionList = {
@@ -141,6 +148,7 @@ export default function Create_checkout_rules() {
   const [textFieldValues, setTextFieldValues] = useState({});
   const [selected, setSelected] = useState("");
   const [popoverActive, setPopoverActive] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(false);
 
   const [baseCunditionList, setBaseCunditionList] = useState(
     StaticBaseCunditionList
@@ -691,7 +699,255 @@ export default function Create_checkout_rules() {
               term: "Rule actions",
               description: (
                 <Card>
-                  <Text>Based on condition *</Text>
+                  <BlockStack gap="400">
+                    <InlineStack>
+                      <Text variant="headingMd">Error message *</Text>
+                      <Badge tone="info">Upgrade to edit</Badge>
+                    </InlineStack>
+
+                    <TextField
+                      disabled
+                      helpText="Enter an error message to notify the customer about the field you are validating."
+                      name="Error_message"
+                      value="Order cannot be placed due to suspected fraud."
+                      maxLength={255}
+                      autoComplete="off"
+                      showCharacterCount
+                    />
+
+                    <Box opacity="0.6">
+                      <Text tone="subdued">
+                        Enter an error message to notify the customer about the
+                        field you are validating.
+                      </Text>
+                    </Box>
+                    <AutocompleteExample />
+
+                    <Text variant="headingMd">Preview</Text>
+
+                    {isMobileView ? (
+                      <Box
+                        background="bg-fill"
+                        borderRadius="300"
+                        borderColor="border"
+                        borderWidth="0165"
+                        minHeight="100%"
+                        paddingBlock="400"
+                      >
+                        <BlockStack align="center" inlineAlign="center">
+                          <Box width="70%">
+                            <BlockStack gap="300">
+                              <Box
+                                background="bg-fill-active"
+                                padding="300"
+                                borderRadius="400"
+                                borderEndEndRadius="0"
+                                borderEndStartRadius="0"
+                              >
+                                <BlockStack gap="200">
+                                  <Text tone="magic-subdued">
+                                    Order summary
+                                  </Text>
+                                  <Box width="100%" paddingBlockStart="300">
+                                    <InlineStack
+                                      align="space-between"
+                                      blockAlign="center"
+                                    >
+                                      <InlineStack>
+                                        <Box>
+                                          <Box position="relative">
+                                            <Box
+                                              background="bg-surface-tertiary"
+                                              borderRadius="200"
+                                            >
+                                              <img
+                                                style={{
+                                                  mixBlendMode: "multiply",
+                                                }}
+                                                height="100"
+                                                width="100"
+                                                src="https://www.americancountryhomestore.com/media/products/979a94fc-3b84-49b9-b48f-f0ff51dd3686.jpg?dimensions=500x500&format=webp"
+                                                alt=""
+                                              />
+                                            </Box>
+                                            <Box
+                                              position="absolute"
+                                              insetBlockStart="0"
+                                              insetInlineEnd="0"
+                                            >
+                                              <Badge>2</Badge>
+                                            </Box>
+                                          </Box>
+                                        </Box>
+                                        <Text>The vase</Text>
+                                      </InlineStack>
+                                      <Text>$15.99</Text>
+                                    </InlineStack>
+                                  </Box>
+
+                                  <InlineStack gap="500" wrap={false}>
+                                    <Box
+                                      shadow="200"
+                                      minHeight="30px"
+                                      width="100%"
+                                      background="bg-fill"
+                                      borderRadius="150"
+                                    ></Box>
+                                    <Box minWidth="58px ">
+                                      <Button disabled>Apply</Button>
+                                    </Box>
+                                  </InlineStack>
+
+                                  <InlineStack align="space-between">
+                                    <Text>Shipping</Text>
+                                    <Text>Free</Text>
+                                  </InlineStack>
+
+                                  <InlineStack align="space-between">
+                                    <Text variant="headingMd">Total</Text>
+                                    <Text variant="headingMd">$15.99</Text>
+                                  </InlineStack>
+                                </BlockStack>
+                              </Box>
+
+                              <Box
+                                background="bg-fill-tertiary"
+                                borderRadius="150"
+                                padding="200"
+                                color="text-critical-secondary"
+                              >
+                                <InlineStack>
+                                  <Box>
+                                    <Icon
+                                      source={AlertDiamondIcon}
+                                      tone="inherit"
+                                    />
+                                  </Box>
+                                  <Text>
+                                    Order cannot be placed due to suspected
+                                    fraud.
+                                  </Text>
+                                </InlineStack>
+                              </Box>
+                              <Box paddingBlockStart="300">
+                                <InlineStack align="space-between">
+                                  <Text variant="headingMd">Contact</Text>
+                                  <Text tone="magic">Login</Text>
+                                </InlineStack>
+                              </Box>
+                            </BlockStack>
+                          </Box>
+                        </BlockStack>
+                      </Box>
+                    ) : (
+                      <Box
+                        background="bg-fill"
+                        borderRadius="300"
+                        borderColor="border"
+                        borderWidth="0165"
+                        minHeight="100%"
+                      >
+                        <InlineStack>
+                          <Box width="70%" padding="300">
+                            <BlockStack gap="400">
+                              <Box
+                                background="bg-fill-tertiary"
+                                borderRadius="150"
+                                padding="200"
+                                color="text-critical-secondary"
+                              >
+                                <InlineStack>
+                                  <Box>
+                                    <Icon
+                                      source={AlertDiamondIcon}
+                                      tone="inherit"
+                                    />
+                                  </Box>
+                                  <Text>
+                                    Order cannot be placed due to suspected
+                                    fraud.
+                                  </Text>
+                                </InlineStack>
+                              </Box>
+
+                              <InlineStack align="space-between">
+                                <Text variant="headingMd">Contact</Text>
+                                <Text tone="magic">Login</Text>
+                              </InlineStack>
+
+                              <TextField
+                                disabled
+                                value="Email or mobile phone number"
+                                autoComplete="off"
+                              />
+                            </BlockStack>
+                          </Box>
+                          <Box
+                            padding="300"
+                            background="bg-fill-active"
+                            width="30%"
+                          >
+                            <Box width="fit-content">
+                              <InlineStack blockAlign="center">
+                                <Box position="relative">
+                                  <Box
+                                    background="bg-surface-tertiary"
+                                    borderRadius="200"
+                                  >
+                                    <img
+                                      style={{ mixBlendMode: "multiply" }}
+                                      height="100"
+                                      width="100"
+                                      src="https://www.americancountryhomestore.com/media/products/979a94fc-3b84-49b9-b48f-f0ff51dd3686.jpg?dimensions=500x500&format=webp"
+                                      alt=""
+                                    />
+                                  </Box>
+                                  <Box
+                                    position="absolute"
+                                    insetBlockStart="0"
+                                    insetInlineEnd="0"
+                                  >
+                                    <Badge>2</Badge>
+                                  </Box>
+                                </Box>
+                                <Text>The vase</Text>
+                              </InlineStack>
+                            </Box>
+
+                            <InlineStack wrap={false} gap="200">
+                              <Box
+                                shadow="200"
+                                width="70%"
+                                minHeight="30px"
+                                background="bg-fill"
+                                borderRadius="150"
+                              ></Box>
+                              <Box minWidth="58px ">
+                                <Button disabled>Apply</Button>
+                              </Box>
+                            </InlineStack>
+                          </Box>
+                        </InlineStack>
+                      </Box>
+                    )}
+
+                    <InlineStack align="center" gap="300">
+                      <Button
+                        pressed={isMobileView}
+                        onClick={() => setIsMobileView((pre) => !pre)}
+                      >
+                        {" "}
+                        <Icon source={MobileIcon} tone="base" />
+                      </Button>
+                      <Button
+                        pressed={!isMobileView}
+                        onClick={() => setIsMobileView((pre) => !pre)}
+                      >
+                        {" "}
+                        <Icon source={DesktopIcon} tone="base" />
+                      </Button>
+                    </InlineStack>
+                  </BlockStack>
                 </Card>
               ),
             },
@@ -699,5 +955,116 @@ export default function Create_checkout_rules() {
         />
       </BlockStack>
     </Page>
+  );
+}
+
+function AutocompleteExample() {
+  const deselectedOptions = useMemo(
+    () => [
+      {
+        title: "",
+        options: [
+          {
+            value: "Top of the checkout page",
+            label: "Top of the checkout page",
+          },
+        ],
+      },
+      {
+        title: "Under field",
+        options: [
+          { value: "Contact", label: "Contact" },
+          { value: "Address (line 1)", label: "Address (line 1)" },
+          {
+            value: "Address (apartment, suite, etc)",
+            label: "Address (apartment, suite, etc)",
+          },
+          { value: "City", label: "City" },
+          { value: "Company", label: "Company" },
+          { value: "Country Code", label: "Country Code" },
+          { value: "First name", label: "First name" },
+          { value: "Last name", label: "Last name" },
+          { value: "Phone Address", label: "Phone Address" },
+          { value: "Province/ State", label: "Province/ State" },
+        ],
+      },
+    ],
+    []
+  );
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const [options, setOptions] = useState(deselectedOptions);
+
+  const updateText = useCallback(
+    (value) => {
+      setInputValue(value);
+
+      if (value === "") {
+        setOptions(deselectedOptions);
+        return;
+      }
+
+      const filterRegex = new RegExp(value, "i");
+      const resultOptions = [];
+
+      deselectedOptions.forEach((opt) => {
+        const options = opt.options.filter((option) =>
+          option.label.match(filterRegex)
+        );
+
+        resultOptions.push({
+          title: opt.title,
+          options,
+        });
+      });
+
+      setOptions(resultOptions);
+    },
+    [deselectedOptions]
+  );
+
+  const updateSelection = useCallback(
+    (selected) => {
+      let selectedValue;
+
+      options.forEach(({ options }) => {
+        if (selectedValue) {
+          return;
+        }
+
+        const matchedOption = options.find((option) =>
+          option.value.match(selected[0])
+        );
+
+        if (matchedOption) {
+          selectedValue = matchedOption.label;
+        }
+      });
+
+      setSelectedOptions(selected);
+      setInputValue(selectedValue ? selectedValue : "");
+    },
+    [options]
+  );
+
+  const textField = (
+    <Autocomplete.TextField
+      helpText="Message will be displayed on this position."
+      onChange={updateText}
+      label="Tags"
+      value={inputValue}
+      prefix={<Icon source={SearchIcon} tone="base" />}
+      placeholder="Search"
+      autoComplete="off"
+    />
+  );
+
+  return (
+    <Autocomplete
+      textField={textField}
+      selected={selectedOptions}
+      options={options}
+      onSelect={updateSelection}
+    />
   );
 }
