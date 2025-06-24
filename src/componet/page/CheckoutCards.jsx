@@ -272,7 +272,7 @@ export default function CheckoutCards() {
                       background="input-border"
                       minHeight="70%"
                       width="90%"
-                      insetBlockStart="600"
+                      insetBlockStart="1000"
                       insetInlineStart="400"
                       borderRadius="200"
                       borderWidth="0165"
