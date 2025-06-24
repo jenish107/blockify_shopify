@@ -48,8 +48,6 @@ import { useState, useCallback } from "react";
 
 import headSingLogo from "../assets/headSing.png";
 import "../style/Main_content.css";
-import Header from "./Layout/Header";
-import Footer from "./Layout/Footer";
 import Checkout_rules_page from "./page/inner_componet/Checkout_rules_page";
 import Checkout_rules_type from "./page/inner_componet/Checkout_rules_type";
 

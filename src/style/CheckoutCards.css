@@ -2,3 +2,6 @@
   background: linear-gradient(to right, rgb(13, 14, 82), rgb(144, 58, 73));
   position: relative;
 }
+#small_text{
+  font-size: 0.5rem;
+}
