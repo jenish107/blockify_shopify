@@ -5,6 +5,7 @@ export default function Cundition_list({
   baseCunditionList,
   selectedBaseCundition,
   togglePopoverActive,
+  scrollRef,
   setSelectedBaseCundition,
 }) {
   if (baseCunditionList[currKey].length !== 0) {
@@ -23,9 +24,20 @@ export default function Cundition_list({
         {baseCunditionList[currKey].map((currItem, index) => {
           return (
             <Box
+              position="relative"
+              ref={
+                selectedBaseCundition.key === currKey &&
+                selectedBaseCundition.index == index
+                  ? scrollRef
+                  : undefined
+              }
               key={index}
               onClick={() =>
-                setSelectedBaseCundition({ key: currKey, index: index })
+                setSelectedBaseCundition({
+                  key: currKey,
+                  index: index,
+                  name: currItem.name,
+                })
               }
             >
               <Box
@@ -56,6 +68,18 @@ export default function Cundition_list({
                     )}
                 </InlineStack>
               </Box>
+              {!currItem.isDisable && (
+                <Box
+                  background="bg-fill"
+                  minHeight="100%"
+                  width="100%"
+                  position="absolute"
+                  insetBlockStart="0"
+                  zIndex="9999"
+                  opacity="0.6"
+                  borderRadius="300"
+                ></Box>
+              )}
             </Box>
           );
         })}

@@ -72,7 +72,16 @@ export default function Analytics() {
                 />
               </Box>
             </Box>
-            <Box id="overlayer"></Box>
+            <Box
+              background="bg-fill"
+              minHeight="100%"
+              width="100%"
+              position="absolute"
+              insetBlockStart="0"
+              zIndex="9999"
+              opacity="0.6"
+              borderRadius="300"
+            ></Box>
           </Box>
 
           <Box position="relative">
@@ -112,7 +121,16 @@ export default function Analytics() {
                   </Box>
                 </BlockStack>
               </Box>
-              <Box id="overlayer"></Box>
+              <Box
+                background="bg-fill"
+                minHeight="100%"
+                width="100%"
+                position="absolute"
+                insetBlockStart="0"
+                zIndex="9999"
+                opacity="0.6"
+                borderRadius="300"
+              ></Box>
             </Box>
           </Box>
 
@@ -149,7 +167,16 @@ export default function Analytics() {
                 />
               </Box>
             </Box>
-            <Box id="overlayer"></Box>
+            <Box
+              background="bg-fill"
+              minHeight="100%"
+              width="100%"
+              position="absolute"
+              insetBlockStart="0"
+              zIndex="9999"
+              opacity="0.6"
+              borderRadius="300"
+            ></Box>
           </Box>
         </Grid>
 
@@ -167,7 +194,16 @@ export default function Analytics() {
                   There was no data found for this date range.
                 </Text>
               </Card>
-              <Box id="overlayer"></Box>
+              <Box
+                background="bg-fill"
+                minHeight="100%"
+                width="100%"
+                position="absolute"
+                insetBlockStart="0"
+                zIndex="9999"
+                opacity="0.6"
+                borderRadius="300"
+              ></Box>
             </Box>
           </Layout.Section>
           <Layout.Section variant="oneThird">
@@ -186,7 +222,16 @@ export default function Analytics() {
                   There was no data found for this date range.
                 </Text>
 
-                <Box id="overlayer"></Box>
+                <Box
+                  background="bg-fill"
+                  minHeight="100%"
+                  width="100%"
+                  position="absolute"
+                  insetBlockStart="0"
+                  zIndex="9999"
+                  opacity="0.6"
+                  borderRadius="300"
+                ></Box>
               </Card>
             </Box>
           </Layout.Section>

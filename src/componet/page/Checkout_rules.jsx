@@ -11,8 +11,6 @@ import {
 
 import { useNavigate } from "react-router";
 
-import Header from "../Layout/Header";
-import Footer from "../Layout/Footer";
 
 export default function Checkout_rules() {
   const navigate = useNavigate();

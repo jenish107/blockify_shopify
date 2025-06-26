@@ -28,6 +28,7 @@ import Hide_dynamic_payment_buttons from "./componet/page/inner_componet/Hide_dy
 import Checkout_validation_rule from "./componet/page/inner_componet/Checkout_validation_rule";
 import Create_checkout_rules from "./componet/page/inner_componet/child_componet/Create_checkout_rules/Create_checkout_rules";
 import Cash_on_delivery_fee from "./componet/page/inner_componet/Cash_on_delivery_fee";
+import Product_offer from "./componet/page/inner_componet/child_componet/Product_offer";
 
 function App() {
   let navigate = useNavigate();
@@ -51,6 +52,10 @@ function App() {
             element={<CheckoutCards />}
           />
           <Route
+            path="/Blockify-Checkout/Create_checkout_ruls"
+            element={<Create_checkout_rules />}
+          />
+          <Route
             path="/Blockify-Checkout/Checkout_rules_page"
             element={<Checkout_rules_page />}
           />
@@ -65,6 +70,10 @@ function App() {
           <Route
             path="/Blockify-Checkout/Cash_on_delivery_fee"
             element={<Cash_on_delivery_fee />}
+          />
+          <Route
+            path="/Blockify-Checkout/Product_offer"
+            element={<Product_offer />}
           />
         </Route>
       </Routes>

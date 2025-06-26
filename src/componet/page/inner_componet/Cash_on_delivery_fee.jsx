@@ -248,10 +248,6 @@ export default function Hide_dynamic_payment_buttons() {
                         />
                       </Box>
                       <Box minWidth="17%">
-                        {console.log(
-                          "inputFieldValues.store_name----------",
-                          inputFieldValues.store_name
-                        )}
                         <Button
                           disabled={!inputFieldValues.store_name}
                           size="large"

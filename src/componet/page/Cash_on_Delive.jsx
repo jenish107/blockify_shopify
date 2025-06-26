@@ -51,7 +51,13 @@ export default function Cash_on_Delive() {
                     shipping option.
                   </Text>
                   <Box>
-                    <Button>Create rule</Button>
+                    <Button
+                      onClick={() =>
+                        navigate("/Blockify-Checkout/Cash_on_delivery_fee")
+                      }
+                    >
+                      Create rule
+                    </Button>
                   </Box>
                 </BlockStack>
               </Box>

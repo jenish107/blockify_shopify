@@ -47,19 +47,23 @@ export default function CheckoutCards() {
 
           <Divider />
           <LegacyCard.Section>
-            <Grid columns={{ xs: 1, sm: 2, md: 2, lg: 3, xl: 3 }}>
+            <Grid columns={{ xs: 1, sm: 1, md: 1, lg: 2, xl: 3 }}>
               <Card padding="0">
                 <BlockStack align="space-between">
-                  <Box padding="300" id="background_liner_Gradient">
+                  <Box
+                    padding="300"
+                    minHeight="12rem"
+                    id="background_liner_Gradient"
+                  >
                     <BlockStack align="center" inlineAlign="center">
                       <img
-                        src="https://protection.blockifyapp.com/static/media/product_offer.48b0a9e4fa0742a505cf5ed8e77b6548.svg"
+                        src="https://protection.blockifyapp.com/static/media/product_offer.4f50d015585b86efdc87ea62f72faf00.svg"
                         alt=""
                       />
                     </BlockStack>
                   </Box>
                   <Box padding="300" minHeight="min-content">
-                    <Box paddingBlockEnd="500">
+                    <Box paddingBlockEnd="1200">
                       <BlockStack gap="200" align="space-between">
                         <Box>
                           <Text variant="headingMd" as="h6">
@@ -72,11 +76,17 @@ export default function CheckoutCards() {
                       </BlockStack>
                     </Box>
                     <Box
-                      position="relative"
-                      insetBlockStart="100"
-                      insetInlineEnd="100"
+                      position="absolute"
+                      insetBlockEnd="200"
+                      insetInlineStart="150"
                     >
-                      <Button>Create</Button>
+                      <Button
+                        onClick={() =>
+                          navigate("/Blockify-Checkout/Product_offer")
+                        }
+                      >
+                        Create
+                      </Button>
                     </Box>
                   </Box>
                 </BlockStack>
@@ -90,96 +100,98 @@ export default function CheckoutCards() {
                     position="relative"
                     id="background_liner_Gradient"
                   >
-                    <BlockStack align="center" gap="200">
-                      <Box
-                        insetBlockStart="300"
-                        position="absolute"
-                        padding="200"
-                        borderRadius="150"
-                        background="bg-surface-warning"
+                    <Box
+                      position="absolute"
+                      padding="200"
+                      insetBlockStart="500"
+                      borderRadius="150"
+                      minWidth="90%"
+                      background="bg-surface-warning"
+                    >
+                      <InlineStack
+                        wrap={false}
+                        align="start"
+                        blockAlign="center"
+                        gap="200"
                       >
-                        <InlineStack
-                          wrap={false}
-                          align="center"
-                          blockAlign="center"
-                          gap="200"
-                        >
-                          <Box>
-                            <Icon source={AlertTriangleIcon} tone="base" />
-                          </Box>
+                        <Box>
+                          <Icon source={AlertTriangleIcon} tone="base" />
+                        </Box>
+                        <BlockStack gap="100">
+                          <Text variant="bodyXs" fontWeight="medium">
+                            {" "}
+                            New arrivals
+                          </Text>
+                          <Text truncate id="ms_text">
+                            Discount 10% off for all items of New arrivals.
+                          </Text>
+                        </BlockStack>
+                      </InlineStack>
+                    </Box>
+
+                    <Box
+                      insetBlockEnd="1600"
+                      insetInlineStart="500"
+                      position="absolute"
+                      padding="200"
+                      minWidth="90%"
+                      borderRadius="150"
+                      background="bg-surface-success"
+                    >
+                      <InlineStack
+                        wrap={false}
+                        align="start"
+                        blockAlign="center"
+                        gap="200"
+                      >
+                        <Box>
+                          <Icon source={CheckCircleIcon} tone="base" />
+                        </Box>
+
+                        <Box>
                           <BlockStack gap="100">
                             <Text variant="bodyXs" fontWeight="medium">
-                              {" "}
-                              New arrivals
+                              You’ve got a discount 🎁
                             </Text>
-                            <Text variant="bodyXs">
-                              Discount 10% off for all items of New arrivals.
-                            </Text>
-                          </BlockStack>
-                        </InlineStack>
-                      </Box>
-
-                      <Box
-                        insetBlockStart="1600"
-                        insetInlineStart="600"
-                        position="absolute"
-                        padding="200"
-                        borderRadius="150"
-                        background="bg-surface-success"
-                      >
-                        <InlineStack
-                          wrap={false}
-                          align="center"
-                          blockAlign="center"
-                          gap="200"
-                        >
-                          <Box>
-                            <Icon source={CheckCircleIcon} tone="base" />
-                          </Box>
-
-                          <Box>
-                            <BlockStack gap="100">
-                              <Text variant="bodyXs" fontWeight="medium">
-                                You’ve got a discount 🎁
-                              </Text>
-                              <Text variant="bodyXs">
-                                Buy 2 more products to unlock the discount.
-                              </Text>
-                            </BlockStack>
-                          </Box>
-                        </InlineStack>
-                      </Box>
-
-                      <Box
-                        insetBlockEnd="300"
-                        insetInlineStart="1000"
-                        position="absolute"
-                        padding="200"
-                        color="text-caution-secondary"
-                        borderRadius="150"
-                        background="bg-surface"
-                      >
-                        <InlineStack
-                          wrap={false}
-                          align="center"
-                          blockAlign="center"
-                          gap="200"
-                        >
-                          <Box>
-                            <Icon tone="critical" source={AlertCircleIcon} />
-                          </Box>
-                          <BlockStack gap="100">
-                            <Text variant="bodyXs" fontWeight="medium">
-                              Your order will be delayed until...
-                            </Text>
-                            <Text variant="bodyXs">
-                              Due to the high volume of deliveries, your order…
+                            <Text truncate id="ms_text">
+                              Buy 2 more products to unlock the discount.
                             </Text>
                           </BlockStack>
-                        </InlineStack>
-                      </Box>
-                    </BlockStack>
+                        </Box>
+                      </InlineStack>
+                    </Box>
+
+                    <Box
+                      insetBlockEnd="200"
+                      insetInlineStart="600"
+                      position="absolute"
+                      padding="200"
+                      minWidth="90%"
+                      color="text-caution-secondary"
+                      borderRadius="150"
+                      background="bg-surface"
+                    >
+                      <InlineStack
+                        wrap={false}
+                        align="start"
+                        blockAlign="center"
+                        gap="200"
+                      >
+                        <Box>
+                          <Icon tone="critical" source={AlertCircleIcon} />
+                        </Box>
+                        <BlockStack gap="100">
+                          <Text variant="bodyXs" fontWeight="medium">
+                            Your order will be delayed until...
+                          </Text>
+                          <Text truncate id="ms_text">
+                            Due to the high volume of deliveries, your order…
+                          </Text>
+                        </BlockStack>
+                      </InlineStack>
+                    </Box>
                   </Box>
+
                   <Box padding="300">
                     <Box paddingBlockEnd="500">
                       <BlockStack gap="200" align="space-between">
@@ -194,9 +206,9 @@ export default function CheckoutCards() {
                       </BlockStack>
                     </Box>
                     <Box
-                      position="relative"
-                      insetBlockStart="100"
-                      insetInlineEnd="100"
+                      position="absolute"
+                      insetBlockEnd="200"
+                      insetInlineStart="150"
                     >
                       <Button>Create</Button>
                     </Box>
@@ -295,9 +307,9 @@ export default function CheckoutCards() {
                       </BlockStack>
                     </Box>
                     <Box
-                      position="relative"
-                      insetBlockStart="100"
-                      insetInlineEnd="100"
+                      position="absolute"
+                      insetBlockEnd="200"
+                      insetInlineStart="150"
                     >
                       <Button>Create</Button>
                     </Box>
@@ -378,7 +390,7 @@ export default function CheckoutCards() {
                     ></Box>
                   </Box>
                   <Box padding="300">
-                    <Box paddingBlockEnd="500">
+                    <Box paddingBlockEnd="1200">
                       <BlockStack gap="200" align="space-between">
                         <Box>
                           <Text variant="headingMd" as="h6">
@@ -392,9 +404,9 @@ export default function CheckoutCards() {
                       </BlockStack>
                     </Box>
                     <Box
-                      position="relative"
-                      insetBlockStart="100"
-                      insetInlineEnd="100"
+                      position="absolute"
+                      insetBlockEnd="200"
+                      insetInlineStart="150"
                     >
                       <Button>Create</Button>
                     </Box>
@@ -468,9 +480,9 @@ export default function CheckoutCards() {
                       </BlockStack>
                     </Box>
                     <Box
-                      position="relative"
-                      insetBlockStart="100"
-                      insetInlineEnd="100"
+                      position="absolute"
+                      insetBlockEnd="200"
+                      insetInlineStart="150"
                     >
                       <Button>Create</Button>
                     </Box>
@@ -507,9 +519,9 @@ export default function CheckoutCards() {
                     </BlockStack>
                   </Box>
                   <Box
-                    position="relative"
-                    insetBlockStart="100"
-                    insetInlineEnd="100"
+                    position="absolute"
+                    insetBlockEnd="200"
+                    insetInlineStart="150"
                   >
                     <Button>Create</Button>
                   </Box>

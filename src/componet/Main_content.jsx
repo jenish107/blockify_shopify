@@ -51,9 +51,13 @@ import "../style/Main_content.css";
 import Checkout_rules_page from "./page/inner_componet/Checkout_rules_page";
 import Checkout_rules_type from "./page/inner_componet/Checkout_rules_type";
 
+import { useNavigate } from "react-router";
+
 export default function Main_content() {
   const [isBanner, setIsBanner] = useState(true);
   const [active, setActive] = useState(false);
+
+  const navigate = useNavigate();
 
   const [answerId, setAnswerId] = useState(0);
   const questions = [
@@ -109,7 +113,11 @@ export default function Main_content() {
         {isBanner && (
           <Banner
             title="USPS has updated their rates"
-            action={{ content: "View all plans", url: "" }}
+            action={{
+              content: "View all plans",
+              url: "",
+              onAction: () => navigate("/Pricing"),
+            }}
             tone="info"
             onDismiss={() => {
               setIsBanner((pre) => !pre);

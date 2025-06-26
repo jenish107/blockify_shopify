@@ -39,7 +39,7 @@ import {
 } from "@shopify/polaris-icons";
 
 import { useNavigate } from "react-router";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Cundition_list from "./Cundition_list";
 
 const StaticBaseCunditionList = {
@@ -48,19 +48,19 @@ const StaticBaseCunditionList = {
       img: "✉️",
       name: "Customer email",
       content: "Based on customer email",
-      opacity: 0.6,
+      isDisable: true,
     },
     {
       img: "🛒",
       name: "Cart total",
       content: "Base on total o the cart",
-      opacity: 0.6,
+      isDisable: true,
     },
     {
       img: "📊",
       name: "Cart quantity",
       content: "Based on total quantity items of the cart",
-      opacity: 0.6,
+      isDisable: true,
     },
   ],
   Customer: [
@@ -68,19 +68,19 @@ const StaticBaseCunditionList = {
       img: "📱",
       name: "Customer email",
       content: "Based on customer email",
-      opacity: 0.6,
+      isDisable: true,
     },
     {
       img: "🏷️",
       name: "Customer tag",
       content: "Based on customer tag",
-      opacity: 0.6,
+      isDisable: false,
     },
     {
       img: "🟰",
       name: "Customer total spent",
       content: "Based on total amount spent",
-      opacity: 0.6,
+      isDisable: true,
     },
   ],
   Cart: [
@@ -88,19 +88,19 @@ const StaticBaseCunditionList = {
       img: "🏷️",
       name: "Customer email",
       content: "Based on customer email",
-      opacity: 0.6,
+      isDisable: true,
     },
     {
       img: "🎁",
       name: "Customer email",
       content: "Based on customer email",
-      opacity: 0.6,
+      isDisable: true,
     },
     {
       img: "🏷️",
       name: "Customer email",
       content: "Based on customer email",
-      opacity: 0.6,
+      isDisable: true,
     },
   ],
   Product: [
@@ -108,7 +108,7 @@ const StaticBaseCunditionList = {
       img: "💳",
       name: "Customer email",
       content: "Based on customer email",
-      opacity: 0.6,
+      isDisable: true,
     },
   ],
   Market: [
@@ -116,7 +116,7 @@ const StaticBaseCunditionList = {
       img: "💵",
       name: "Customer email",
       content: "Based on customer email",
-      opacity: 0.6,
+      isDisable: true,
     },
   ],
   "Shipping Address": [
@@ -124,13 +124,13 @@ const StaticBaseCunditionList = {
       img: "👨‍💻",
       name: "Customer email",
       content: "Based on customer email",
-      opacity: 0.6,
+      isDisable: true,
     },
     {
       img: "📍",
       name: "Customer email",
       content: "Based on customer email",
-      opacity: 0.6,
+      isDisable: true,
     },
   ],
   "Date time": [
@@ -138,17 +138,22 @@ const StaticBaseCunditionList = {
       img: "🕐",
       name: "Hour",
       content: "Based on hour",
-      opacity: 0.6,
+      isDisable: true,
     },
   ],
 };
 
 export default function Create_checkout_rules() {
   const [selectedCundition, setSelectedCundition] = useState(1);
-  const [textFieldValues, setTextFieldValues] = useState({});
+  const [textFieldValues, setTextFieldValues] = useState({
+    search: "",
+    store_name: "",
+  });
   const [selected, setSelected] = useState("");
   const [popoverActive, setPopoverActive] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
+  const scrollRef = useRef(null);
+  const [isStoreName, setIsStoreName] = useState(false);
 
   const [baseCunditionList, setBaseCunditionList] = useState(
     StaticBaseCunditionList
@@ -170,6 +175,9 @@ export default function Create_checkout_rules() {
   }, []);
 
   const handleTextFieldChanged = useCallback(() => {
+    if (event.target.name == "store_name") {
+      setIsStoreName(event.target.value == "" && true);
+    }
     setTextFieldValues((pre) => ({
       ...pre,
       [event.target.name]: event.target.value,
@@ -177,17 +185,24 @@ export default function Create_checkout_rules() {
   }, []);
 
   useEffect(() => {
+    if (popoverActive && scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [selectedBaseCundition, popoverActive]);
+
+  useEffect(() => {
     const arrayBaseCundtion = Object.entries(StaticBaseCunditionList).map(
       (currArray) => {
         return [
           currArray[0],
           currArray[1].filter((currItem) => {
-            return currItem.name.toLocaleLowerCase().includes(textFieldValues);
+            return currItem.name
+              .toLocaleLowerCase()
+              .includes(textFieldValues.search);
           }),
         ];
       }
     );
-
     setBaseCunditionList(Object.fromEntries(arrayBaseCundtion));
   }, [textFieldValues]);
 
@@ -238,6 +253,14 @@ export default function Create_checkout_rules() {
     </Box>
   );
 
+  const handleSelectCunditonSet = (value, name, index) => {
+    setSelectedCundition(value);
+    setSelectedBaseCundition({
+      key: name,
+      index: index,
+    });
+  };
+
   const handleSelectChange = useCallback((value) => setSelected(value), []);
   return (
     <Page
@@ -252,26 +275,28 @@ export default function Create_checkout_rules() {
               term: "Rule info",
               description: (
                 <Card>
-                  <Text variant="headingMd" as="h6">
-                    Rule status
-                  </Text>
-                  <Select
-                    label="Date range"
-                    options={options}
-                    onChange={handleSelectChange}
-                    value={selected}
-                  />
-                  <Text variant="headingMd" as="h6">
-                    Rule name
-                  </Text>
-                  <TextField
-                    value={textFieldValues.rule_name}
-                    name="rule_name"
-                    onChange={handleTextFieldChanged}
-                    label="For internal use only, not visible to customers."
-                    placeholder="Enter rule name"
-                    autoComplete="off"
-                  />
+                  <BlockStack gap="100">
+                    <Text variant="headingMd" as="h6">
+                      Rule status
+                    </Text>
+                    <Select
+                      label="Date range"
+                      options={options}
+                      onChange={handleSelectChange}
+                      value={selected}
+                    />
+                    <Text variant="headingMd" as="h6">
+                      Rule name
+                    </Text>
+                    <TextField
+                      value={textFieldValues.rule_name}
+                      name="rule_name"
+                      onChange={handleTextFieldChanged}
+                      label="For internal use only, not visible to customers."
+                      placeholder="Enter rule name"
+                      autoComplete="off"
+                    />
+                  </BlockStack>
                 </Card>
               ),
             },
@@ -359,7 +384,13 @@ export default function Create_checkout_rules() {
                             borderColor="border-brand"
                             borderWidth="0165"
                             minHeight="100%"
-                            onClick={() => setSelectedCundition(1)}
+                            onClick={() =>
+                              handleSelectCunditonSet(
+                                1,
+                                "Most used conditions",
+                                0
+                              )
+                            }
                           >
                             <BlockStack align="center" inlineAlign="center">
                               <Text variant="headingMd" as="h6">
@@ -443,7 +474,9 @@ export default function Create_checkout_rules() {
                             borderColor="border-brand"
                             borderWidth="0165"
                             minHeight="100%"
-                            onClick={() => setSelectedCundition(2)}
+                            onClick={() =>
+                              handleSelectCunditonSet(2, "Customer", 0)
+                            }
                           >
                             <BlockStack align="center" inlineAlign="center">
                               <Text variant="headingMd" as="h6">
@@ -545,7 +578,13 @@ export default function Create_checkout_rules() {
                             borderColor="border-brand"
                             borderWidth="0165"
                             minHeight="100%"
-                            onClick={() => setSelectedCundition(3)}
+                            onClick={() =>
+                              handleSelectCunditonSet(
+                                3,
+                                "Most used conditions",
+                                0
+                              )
+                            }
                           >
                             {" "}
                             <BlockStack align="center" inlineAlign="center">
@@ -612,6 +651,7 @@ export default function Create_checkout_rules() {
                                   return (
                                     <Cundition_list
                                       key={index}
+                                      scrollRef={scrollRef}
                                       togglePopoverActive={togglePopoverActive}
                                       currKey={currKey}
                                       baseCunditionList={baseCunditionList}
@@ -653,7 +693,7 @@ export default function Create_checkout_rules() {
                         </Box>
 
                         <Box width="70%">
-                          <InlineStack wrap={false} blockAlign="center">
+                          <InlineStack wrap={false} blockAlign="end">
                             <Box width="100%">
                               <TextField
                                 label="Store name"
@@ -661,12 +701,14 @@ export default function Create_checkout_rules() {
                                 placeholder="Enter email address"
                                 value={textFieldValues.store_name}
                                 onChange={handleTextFieldChanged}
+                                onBlur={() =>
+                                  setIsStoreName(
+                                    textFieldValues.store_name == "" && true
+                                  )
+                                }
                                 autoComplete="off"
                                 requiredIndicator
-                                error={
-                                  !textFieldValues.store_name &&
-                                  "Store name is required"
-                                }
+                                error={isStoreName && "Store name is required"}
                               />
                             </Box>
                             <Box minWidth="70px" paddingInlineStart="300">
@@ -681,7 +723,7 @@ export default function Create_checkout_rules() {
                   </Card>
 
                   <Card>
-                    <InlineStack align="center" blockAlign="center">
+                    <InlineStack align="center" gap="200" blockAlign="center">
                       <Button disabled>+ Add condition</Button>
 
                       <Badge tone="info">
@@ -700,7 +742,7 @@ export default function Create_checkout_rules() {
               description: (
                 <Card>
                   <BlockStack gap="400">
-                    <InlineStack>
+                    <InlineStack gap="300">
                       <Text variant="headingMd">Error message *</Text>
                       <Badge tone="info">Upgrade to edit</Badge>
                     </InlineStack>
@@ -715,12 +757,6 @@ export default function Create_checkout_rules() {
                       showCharacterCount
                     />
 
-                    <Box opacity="0.6">
-                      <Text tone="subdued">
-                        Enter an error message to notify the customer about the
-                        field you are validating.
-                      </Text>
-                    </Box>
                     <AutocompleteExample />
 
                     <Text variant="headingMd">Preview</Text>
@@ -974,9 +1010,9 @@ function AutocompleteExample() {
         title: "Under field",
         options: [
           { value: "Contact", label: "Contact" },
-          { value: "Address (line 1)", label: "Address (line 1)" },
+          { value: "Address line 1", label: "Address (line 1)" },
           {
-            value: "Address (apartment, suite, etc)",
+            value: "Address apartment, suite, etc",
             label: "Address (apartment, suite, etc)",
           },
           { value: "City", label: "City" },
