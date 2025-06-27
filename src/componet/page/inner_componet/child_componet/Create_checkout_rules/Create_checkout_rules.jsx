@@ -41,6 +41,7 @@ import {
 import { useNavigate } from "react-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Cundition_list from "./Cundition_list";
+import Cundition_set_box from "./Cundition_set_box";
 
 const StaticBaseCunditionList = {
   "Most used conditions": [
@@ -65,87 +66,284 @@ const StaticBaseCunditionList = {
   ],
   Customer: [
     {
-      img: "📱",
-      name: "Customer email",
-      content: "Based on customer email",
       isDisable: true,
+      img: "📱",
+      name: "Customer phone number",
+      content: "Customer phone number",
     },
+
     {
+      isDisable: true,
       img: "🏷️",
       name: "Customer tag",
       content: "Based on customer tag",
-      isDisable: false,
     },
     {
+      isDisable: true,
       img: "🟰",
       name: "Customer total spent",
       content: "Based on total amount spent",
+    },
+    {
       isDisable: true,
+      img: "💵",
+      name: "Customer currency",
+      content: "Based on customer currency",
+    },
+    {
+      isDisable: true,
+      img: "👨🏼‍💻",
+      name: "Customer is logged in",
+      content: "Based on loggin condition",
     },
   ],
   Cart: [
     {
-      img: "🏷️",
-      name: "Customer email",
-      content: "Based on customer email",
+      img: "🛒",
       isDisable: true,
+      name: "Cart total",
+      content: "Based on total of the cart",
     },
     {
-      img: "🎁",
-      name: "Customer email",
-      content: "Based on customer email",
+      img: "📊",
       isDisable: true,
+      name: "Cart quantity",
+      content: "ased on total quantity items of the cart",
     },
     {
-      img: "🏷️",
-      name: "Customer email",
-      content: "Based on customer email",
+      img: "📦",
       isDisable: true,
+      name: "Cart contains products",
+      content: "Based on cart contains products",
+    },
+    {
+      img: "🗳️",
+      isDisable: true,
+      name: "Cart contains collection",
+      content: "Based on Cart contains collection",
+    },
+    {
+      img: "⚖️",
+      isDisable: true,
+      name: "Cart weight",
+      content: "Based on order weight",
     },
   ],
   Product: [
     {
-      img: "💳",
-      name: "Customer email",
-      content: "Based on customer email",
+      img: " 📦",
       isDisable: true,
+      name: "Product",
+      content: "Based on selected product",
+    },
+    {
+      img: "📦",
+      isDisable: true,
+      name: "Product price",
+      content: "Based on the price of product",
+    },
+    {
+      img: "🔖",
+      isDisable: true,
+      name: "Product tag",
+      content: "Based on product tag",
+    },
+    {
+      img: "📦",
+      isDisable: true,
+      name: "Product SKU",
+      content: "Based on product SKU",
+    },
+    {
+      img: "🗳️",
+      isDisable: true,
+      name: "Collection",
+      content: "Based on the collection",
+    },
+    {
+      img: "📦",
+      isDisable: true,
+      name: "Product quantity",
+      content: "Based on specific product quantity added to the cart.",
     },
   ],
   Market: [
     {
-      img: "💵",
-      name: "Customer email",
-      content: "Based on customer email",
+      img: "🛍️",
+      name: "Shopify market",
+      content: "Based on Shopify market",
       isDisable: true,
     },
   ],
   "Shipping Address": [
     {
-      img: "👨‍💻",
-      name: "Customer email",
-      content: "Based on customer email",
-      isDisable: true,
+      img: "📍",
+      name: "Shipping address line 1",
+      content: "Based on shipping address line 1",
     },
     {
       img: "📍",
-      name: "Customer email",
-      content: "Based on customer email",
-      isDisable: true,
+      name: "Shipping address line 2",
+      content: "Based on shipping address line 2",
     },
+    { img: "🔠", name: "Name", content: "Based on name" },
+    {
+      img: "📱",
+      name: "Delivery phone number",
+      content: "Based on delivery phone number",
+    },
+
+    {
+      img: "🏤",
+      name: "PO Box address",
+      content: "Validate if address is PO box",
+    },
+    {
+      img: "🏢",
+      name: "Delivery company",
+      content: "Based on delivery company",
+    },
+    { img: "📫", name: "Zip code", content: "Based on customer zip code" },
+    {
+      img: "🧾",
+      name: "VAT number",
+      content: "Validate if company missing VAT number",
+    },
+    { img: "🌎", name: "Country", content: "Based on customer country" },
+    {
+      img: "🏡",
+      name: "Missing house",
+      content: "Validate if shipping address missing house number",
+    },
+    {
+      img: "🌆",
+      name: "Province code",
+      content: "Based on customer province code",
+    },
+    { img: "🏙", name: "City", content: "Based on customer city" },
   ],
   "Date time": [
+    { img: "🕒", name: "Hour", content: "Based on hour (store timezone)" },
     {
-      img: "🕐",
-      name: "Hour",
-      content: "Based on hour",
-      isDisable: true,
+      img: "🗓️",
+      name: "Weekday",
+      content: "Based on weekday (store timezone)",
+    },
+    {
+      img: "🗓️",
+      name: "Hour and weekday",
+      content: "Based on hour and weekday (store timezone)",
     },
   ],
 };
 
+const Cundition_set1 = {
+  first_grid: {
+    Customer: ["Customer email", "Customer tag"],
+    Cart: ["Cart total", "Cart has subscription item", "Cart quantity"],
+    product: [
+      "Product",
+      "Product quantity",
+      "Collection",
+      "Product quantity of collection",
+      "Product SKU",
+    ],
+  },
+  second_grid: {
+    "Shipping Address": [
+      "Shipping address line 1",
+      "Shipping address line 2",
+      "Delivery phone number",
+      "PO Box address",
+      "VAT number",
+      "Country",
+      "Missing house",
+      "Province code",
+      "City",
+    ],
+    "Date time": ["Hour", "Weekday", "Hour and weekday"],
+  },
+};
+
+const Cundition_set2 = {
+  first_grid: {
+    Customer: [
+      "Customer phone number",
+      "Customer total spent",
+      "Customer currency",
+      "Customer is logged in",
+    ],
+    product: [
+      "Product",
+      "Product quantity",
+      "Collection",
+      "Product quantity of collection",
+    ],
+  },
+  second_grid: {
+    Cart: [
+      "Cart subtotal",
+      "Cart total",
+      "Cart has discount",
+      "Cart quantity",
+      "Cart weight",
+    ],
+
+    "Shipping Address": [
+      "Name",
+      "PO Box address",
+      "Delivery company",
+      "Zip code",
+      "VAT number",
+      "Country",
+      "Missing house",
+    ],
+  },
+};
+
+const Cundition_set3 = {
+  first_grid: {
+    Customer: ["Customer email"],
+    Cart: [
+      "Cart subtotal",
+      "Cart total",
+      "Cart has subscription item",
+      "Cart quantity",
+      "Cart weight",
+    ],
+    product: [
+      "Product quantity",
+      "Product SKU",
+      "Product tag",
+      "Product vendor",
+      "Product is gift card",
+    ],
+    Market: ["Shopify market"],
+  },
+  second_grid: {
+    "Shipping Address": [
+      "Shipping address line 1",
+      "Shipping address line 2",
+      "Name",
+      "Delivery phone number",
+      "PO Box address",
+      "Delivery company",
+      "Zip code",
+      "VAT number",
+      "Country",
+      "Missing house",
+      "Province code",
+      "City",
+    ],
+  },
+};
+
 export default function Create_checkout_rules() {
-  const [selectedCundition, setSelectedCundition] = useState(1);
-  const [textFieldValues, setTextFieldValues] = useState({
+  const [selectedCundition, setSelectedCundition] = useState({
+    value: Cundition_set1,
+    setName: "Cundition_set1",
+  });
+  const [fieldValues, setFieldValues] = useState({
     search: "",
     store_name: "",
   });
@@ -178,7 +376,7 @@ export default function Create_checkout_rules() {
     if (event.target.name == "store_name") {
       setIsStoreName(event.target.value == "" && true);
     }
-    setTextFieldValues((pre) => ({
+    setFieldValues((pre) => ({
       ...pre,
       [event.target.name]: event.target.value,
     }));
@@ -198,13 +396,13 @@ export default function Create_checkout_rules() {
           currArray[1].filter((currItem) => {
             return currItem.name
               .toLocaleLowerCase()
-              .includes(textFieldValues.search);
+              .includes(fieldValues.search);
           }),
         ];
       }
     );
     setBaseCunditionList(Object.fromEntries(arrayBaseCundtion));
-  }, [textFieldValues]);
+  }, [fieldValues.search]);
 
   const activator = (
     <Box
@@ -253,13 +451,35 @@ export default function Create_checkout_rules() {
     </Box>
   );
 
-  const handleSelectCunditonSet = (value, name, index) => {
-    setSelectedCundition(value);
+  const handleSelectCunditonSet = (value, setName, name, index) => {
+    setSelectedCundition({ value: value, setName: setName });
     setSelectedBaseCundition({
       key: name,
       index: index,
     });
   };
+
+  useEffect(() => {
+    const temp = Object.entries(baseCunditionList).map((currItem) => {
+      const childTemp = currItem[1].map((currArray) => {
+        if (
+          selectedCundition.value.first_grid[currItem[0]]?.includes(
+            currArray.name
+          ) ||
+          selectedCundition.value.second_grid[currItem[0]]?.includes(
+            currArray.name
+          )
+        ) {
+          return { ...currArray, isDisable: false };
+        }
+        return currArray;
+      });
+
+      return [currItem[0], childTemp];
+    });
+
+    setBaseCunditionList(Object.fromEntries(temp));
+  }, [selectedCundition]);
 
   const handleSelectChange = useCallback((value) => setSelected(value), []);
   return (
@@ -289,7 +509,7 @@ export default function Create_checkout_rules() {
                       Rule name
                     </Text>
                     <TextField
-                      value={textFieldValues.rule_name}
+                      value={fieldValues.rule_name}
                       name="rule_name"
                       onChange={handleTextFieldChanged}
                       label="For internal use only, not visible to customers."
@@ -309,73 +529,18 @@ export default function Create_checkout_rules() {
                       <Grid columns={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 3 }}>
                         <Tooltip
                           width="100%"
-                          padding="400"
                           preferredPosition="mostSpace"
                           content={
-                            <InlineGrid columns={2} gap="800">
-                              <Box width="100%">
-                                <Text variant="headingMd" as="h6">
-                                  Customer
-                                </Text>
-                                <Box paddingInlineStart="300">
-                                  <Text>Customer email</Text>
-                                  <Text>Customer tag</Text>
-                                </Box>
-
-                                <Box>
-                                  <Text variant="headingMd" as="h6">
-                                    Cart
-                                  </Text>
-                                  <Box paddingInlineStart="300">
-                                    <Text>Cart total </Text>
-                                    <Text>Cart has subscription item </Text>
-                                    <Text>Cart quantity </Text>
-                                  </Box>
-                                </Box>
-
-                                <Text variant="headingMd" as="h6">
-                                  Product
-                                </Text>
-                                <Box paddingInlineStart="300">
-                                  <Text> Product</Text>
-                                  <Text>Product quantity</Text>
-                                  <Text>Collection</Text>
-                                  <Text>Product quantity of collection</Text>
-                                  <Text>Product SKU</Text>
-                                </Box>
-                              </Box>
-
-                              <Box width="100%">
-                                <Text variant="headingMd" as="h6">
-                                  Shipping Address
-                                </Text>
-                                <Box paddingInlineStart="300">
-                                  <Text> Shipping address line 1</Text>
-                                  <Text>Shipping address line 2</Text>
-                                  <Text>Delivery phone number</Text>
-                                  <Text>PO Box address</Text>
-                                  <Text>VAT number</Text>
-                                  <Text>Country</Text>
-                                  <Text>Missing house</Text>
-                                  <Text>Province code</Text>
-                                  <Text>City</Text>
-                                </Box>
-
-                                <Text variant="headingMd" as="h6">
-                                  Date time
-                                </Text>
-                                <Box paddingInlineStart="300">
-                                  <Text> Hour</Text>
-                                  <Text>Weekday</Text>
-                                  <Text>Hour and weekday</Text>
-                                </Box>
-                              </Box>
-                            </InlineGrid>
+                            <>
+                              <Cundition_set_box
+                                Cundition_set={Cundition_set1}
+                              />
+                            </>
                           }
                         >
                           <Box
                             background={
-                              selectedCundition == 1
+                              selectedCundition.setName == "Cundition_set1"
                                 ? "bg-fill-active"
                                 : "bg-fill"
                             }
@@ -386,7 +551,8 @@ export default function Create_checkout_rules() {
                             minHeight="100%"
                             onClick={() =>
                               handleSelectCunditonSet(
-                                1,
+                                Cundition_set1,
+                                "Cundition_set1",
                                 "Most used conditions",
                                 0
                               )
@@ -409,63 +575,14 @@ export default function Create_checkout_rules() {
 
                         <Tooltip
                           width="100%"
-                          padding="400"
                           preferredPosition="mostSpace"
                           content={
-                            <InlineGrid columns={2} gap="800">
-                              <Box width="100%">
-                                <Text variant="headingMd" as="h6">
-                                  Customer
-                                </Text>
-                                <Box paddingInlineStart="300">
-                                  <Text> Customer phone number</Text>
-                                  <Text>Customer total spent</Text>
-                                  <Text>Customer currency</Text>
-                                  <Text>Customer is logged in</Text>
-                                </Box>
-
-                                <Text variant="headingMd" as="h6">
-                                  Product
-                                </Text>
-                                <Box paddingInlineStart="300">
-                                  <Text> Product</Text>
-                                  <Text>Product quantity</Text>
-                                  <Text>Collection</Text>
-                                  <Text>Product quantity of collection</Text>
-                                </Box>
-                              </Box>
-
-                              <Box width="100%">
-                                <Text variant="headingMd" as="h6">
-                                  Cart
-                                </Text>
-                                <Box paddingInlineStart="300">
-                                  <Text> Cart subtotal</Text>
-                                  <Text>Cart total</Text>
-                                  <Text>Cart has discount</Text>
-                                  <Text>Cart quantity</Text>
-                                  <Text>Cart weight</Text>
-                                </Box>
-
-                                <Text variant="headingMd" as="h6">
-                                  Shipping Address
-                                </Text>
-                                <Box paddingInlineStart="300">
-                                  <Text> Name</Text>
-                                  <Text>PO Box address</Text>
-                                  <Text>Delivery company</Text>
-                                  <Text>Zip code</Text>
-                                  <Text>VAT number</Text>
-                                  <Text>Country</Text>
-                                  <Text>Missing house</Text>
-                                </Box>
-                              </Box>
-                            </InlineGrid>
+                            <Cundition_set_box Cundition_set={Cundition_set2} />
                           }
                         >
                           <Box
                             background={
-                              selectedCundition == 2
+                              selectedCundition.setName == "Cundition_set2"
                                 ? "bg-fill-active"
                                 : "bg-fill"
                             }
@@ -475,7 +592,12 @@ export default function Create_checkout_rules() {
                             borderWidth="0165"
                             minHeight="100%"
                             onClick={() =>
-                              handleSelectCunditonSet(2, "Customer", 0)
+                              handleSelectCunditonSet(
+                                Cundition_set2,
+                                "Cundition_set2",
+                                "Customer",
+                                0
+                              )
                             }
                           >
                             <BlockStack align="center" inlineAlign="center">
@@ -495,81 +617,14 @@ export default function Create_checkout_rules() {
 
                         <Tooltip
                           width="100%"
-                          padding="400"
                           preferredPosition="mostSpace"
                           content={
-                            <InlineGrid columns={2} gap="800">
-                              <Box width="100%">
-                                <Text variant="headingMd" as="h6">
-                                  Customer
-                                </Text>
-                                <Box paddingInlineStart="300">
-                                  <Text>Customer email</Text>
-                                </Box>
-
-                                <Box>
-                                  <Text variant="headingMd" as="h6">
-                                    Product
-                                  </Text>
-                                  <Box paddingInlineStart="300">
-                                    <Text> Product quantity</Text>
-                                    <Text>Product SKU</Text>
-                                    <Text>Product tag</Text>
-                                    <Text>Product vendor</Text>
-                                    <Text>Product is gift card</Text>
-                                  </Box>
-                                </Box>
-
-                                <Text variant="headingMd" as="h6">
-                                  Cart
-                                </Text>
-                                <Box paddingInlineStart="300">
-                                  <Text> Cart subtotal</Text>
-                                  <Text>Cart total</Text>
-                                  <Text>Cart has subscription item</Text>
-                                  <Text>Cart quantity</Text>
-                                  <Text>Cart weight</Text>
-                                </Box>
-
-                                <Text variant="headingMd" as="h6">
-                                  Market
-                                </Text>
-                                <Box paddingInlineStart="300">
-                                  <Text> Shopify market</Text>
-                                </Box>
-                              </Box>
-
-                              <Box width="100%">
-                                <Text variant="headingMd" as="h6">
-                                  Shipping Address
-                                </Text>
-                                <Box paddingInlineStart="300">
-                                  <Text> Shipping address line 1</Text>
-                                  <Text>Shipping address line 2</Text>
-                                  <Text>Delivery phone number</Text>
-                                  <Text>PO Box address</Text>
-                                  <Text>VAT number</Text>
-                                  <Text>Country</Text>
-                                  <Text>Missing house</Text>
-                                  <Text>Province code</Text>
-                                  <Text>City</Text>
-                                </Box>
-
-                                <Text variant="headingMd" as="h6">
-                                  Date time
-                                </Text>
-                                <Box paddingInlineStart="300">
-                                  <Text> Hour</Text>
-                                  <Text>Weekday</Text>
-                                  <Text>Hour and weekday</Text>
-                                </Box>
-                              </Box>
-                            </InlineGrid>
+                            <Cundition_set_box Cundition_set={Cundition_set3} />
                           }
                         >
                           <Box
                             background={
-                              selectedCundition == 3
+                              selectedCundition.setName == "Cundition_set3"
                                 ? "bg-fill-active"
                                 : "bg-fill"
                             }
@@ -580,7 +635,8 @@ export default function Create_checkout_rules() {
                             minHeight="100%"
                             onClick={() =>
                               handleSelectCunditonSet(
-                                3,
+                                Cundition_set3,
+                                "Cundition_set3",
                                 "Most used conditions",
                                 0
                               )
@@ -626,7 +682,7 @@ export default function Create_checkout_rules() {
                                 placeholder="Search"
                                 clearButton
                                 name="search"
-                                value={textFieldValues.search}
+                                value={fieldValues.search}
                                 onChange={handleTextFieldChanged}
                                 onClearButtonClick={() => {}}
                               />
@@ -699,11 +755,11 @@ export default function Create_checkout_rules() {
                                 label="Store name"
                                 name="store_name"
                                 placeholder="Enter email address"
-                                value={textFieldValues.store_name}
+                                value={fieldValues.store_name}
                                 onChange={handleTextFieldChanged}
                                 onBlur={() =>
                                   setIsStoreName(
-                                    textFieldValues.store_name == "" && true
+                                    fieldValues.store_name == "" && true
                                   )
                                 }
                                 autoComplete="off"

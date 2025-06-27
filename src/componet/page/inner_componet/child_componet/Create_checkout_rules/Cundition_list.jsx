@@ -1,5 +1,7 @@
 import { Box, InlineStack, Text } from "@shopify/polaris";
 
+import "../../../../../style/Cundition_list.css";
+
 export default function Cundition_list({
   currKey,
   baseCunditionList,
@@ -24,6 +26,7 @@ export default function Cundition_list({
         {baseCunditionList[currKey].map((currItem, index) => {
           return (
             <Box
+              id="hover_effect"
               position="relative"
               ref={
                 selectedBaseCundition.key === currKey &&

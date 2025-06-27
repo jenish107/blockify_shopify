@@ -32,8 +32,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import Cundition_list from "./child_componet/Create_checkout_rules/Cundition_list";
 import currency from "../../../Api/currencies.json";
+import Based_condition_option from "./child_componet/Based_condition_option";
 
-const StaticBaseCunditionList = {
+const CommanBaseCunditionList = {
   Always: [
     {
       img: "🎯",
@@ -107,7 +108,7 @@ const StaticProductList = {
     {
       img: " 📦",
       isDisable: true,
-      name: " Product",
+      name: "Product",
       content: "Based on selected product",
     },
     {
@@ -143,24 +144,34 @@ const StaticProductList = {
   ],
 };
 
+const FullBaseCunditionList = {
+  ...CommanBaseCunditionList,
+  ...StaticCartList,
+  ...StaticProductList,
+};
+
 export default function Hide_dynamic_payment_buttons() {
   const [selected, setSelected] = useState("");
   const [selected2, setSelected2] = useState("Select Position");
-  const [textFieldValues, setTextFieldValues] = useState({});
+  const [fieldValues, setFieldValues] = useState({
+    search: "",
+  });
   const [popoverActive, setPopoverActive] = useState(false);
   const [isShowError, setIsShowError] = useState(false);
-  const scrollRef = useRef(null);
-  const navigate = useNavigate();
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [baseCunditionList, setBaseCunditionList] = useState(
+    CommanBaseCunditionList
+  );
+ 
+
+  const scrollRef = useRef(null);
+  const navigate = useNavigate();
+
   const [triggerOptions, setTriggerOptions] = useState([
     { value: "Is", label: "Is" },
     { value: "Is not", label: "Is not" },
   ]);
-
-  const [baseCunditionList, setBaseCunditionList] = useState(
-    StaticBaseCunditionList
-  );
 
   const [selectedBaseCundition, setSelectedBaseCundition] = useState({
     key: "Always",
@@ -176,6 +187,75 @@ export default function Hide_dynamic_payment_buttons() {
     { label: "Select Position", value: "Select Position", disabled: "true" },
     { label: "Product page", value: "Product" },
     { label: "Cart page", value: "Cart" },
+  ];
+
+  const productNameList = [
+    {
+      value: "The Inventory Not Tracked Snowboard",
+      label: "The Inventory Not Tracked Snowboard",
+    },
+    { value: "Gift Card", label: "Gift Card" },
+    {
+      value: "The Minimal Snowboard",
+      label: "The Minimal Snowboard",
+    },
+    {
+      value: "The Collection Snowboard: Hydrogen",
+      label: "The Collection Snowboard: Hydrogen",
+    },
+    {
+      value: "The Draft Snowboard",
+      label: "The Draft Snowboard",
+    },
+    {
+      value: "The Complete Snowboard",
+      label: "The Complete Snowboard",
+    },
+    {
+      value: "The Archived Snowboard",
+      label: "The Archived Snowboard",
+    },
+    {
+      value: "The Out of Stock Snowboard",
+      label: "The Out of Stock Snowboard",
+    },
+    {
+      value: "The Hidden Snowboard",
+      label: "The Hidden Snowboard",
+    },
+    {
+      value: "The Videographer Snowboard",
+      label: "The Videographer Snowboard",
+    },
+
+    {
+      value: "Selling Plans Ski Wax",
+      label: "Selling Plans Ski Wax",
+    },
+    {
+      value: "The Compare at Price Snowboard",
+      label: "The Compare at Price Snowboard",
+    },
+    {
+      value: "The Collection Snowboard: Oxygen",
+      label: "The Collection Snowboard: Oxygen",
+    },
+    {
+      value: "The Multi-location Snowboard",
+      label: "The Multi-location Snowboard",
+    },
+    {
+      value: "The Multi-managed Snowboard",
+      label: "The Multi-managed Snowboard",
+    },
+    {
+      value: "The 3p Fulfilled Snowboard",
+      label: "The 3p Fulfilled Snowboard",
+    },
+    {
+      value: "The Collection Snowboard: Liquid",
+      label: "The Collection Snowboard: Liquid",
+    },
   ];
 
   const handleSelectChange = useCallback((value) => setSelected(value), []);
@@ -199,8 +279,8 @@ export default function Hide_dynamic_payment_buttons() {
     }
   }, [selectedBaseCundition, popoverActive]);
 
-  const handleTextFieldChanged = useCallback(() => {
-    setTextFieldValues((pre) => ({
+  const handleFieldChanged = useCallback(() => {
+    setFieldValues((pre) => ({
       ...pre,
       [event.target.name]: event.target.value,
     }));
@@ -208,11 +288,11 @@ export default function Hide_dynamic_payment_buttons() {
 
   useEffect(() => {
     if (selected2 == "Cart") {
-      setBaseCunditionList({ ...StaticBaseCunditionList, ...StaticCartList });
+      setBaseCunditionList({ ...CommanBaseCunditionList, ...StaticCartList });
     }
     if (selected2 == "Product") {
       setBaseCunditionList({
-        ...StaticBaseCunditionList,
+        ...CommanBaseCunditionList,
         ...StaticProductList,
       });
     }
@@ -233,7 +313,7 @@ export default function Hide_dynamic_payment_buttons() {
           <InlineStack gap="500">
             <Text variant="headingXl" as="h4">
               {
-                baseCunditionList[selectedBaseCundition.key][
+                FullBaseCunditionList[selectedBaseCundition.key][
                   selectedBaseCundition?.index
                 ]?.img
               }
@@ -241,14 +321,14 @@ export default function Hide_dynamic_payment_buttons() {
             <Box>
               <Text fontWeight="bold">
                 {
-                  baseCunditionList[selectedBaseCundition.key][
+                  FullBaseCunditionList[selectedBaseCundition.key][
                     selectedBaseCundition?.index
                   ]?.name
                 }
               </Text>
               <Text tone="subdued">
                 {
-                  baseCunditionList[selectedBaseCundition.key][
+                  FullBaseCunditionList[selectedBaseCundition.key][
                     selectedBaseCundition?.index
                   ]?.content
                 }
@@ -341,20 +421,40 @@ export default function Hide_dynamic_payment_buttons() {
   }, [selectedBaseCundition]);
 
   useEffect(() => {
-    const arrayBaseCundtion = Object.entries(StaticBaseCunditionList).map(
+    const arrayBaseCundtion = Object.entries(CommanBaseCunditionList).map(
       (currArray) => {
         return [
           currArray[0],
           currArray[1].filter((currItem) => {
             return currItem.name
               .toLocaleLowerCase()
-              .includes(textFieldValues.search);
+              .includes(fieldValues.search);
           }),
         ];
       }
     );
     setBaseCunditionList(Object.fromEntries(arrayBaseCundtion));
-  }, [textFieldValues]);
+  }, [fieldValues.search]);
+
+ 
+
+  const optionsMarkup =
+    productNameList.length > 0
+      ? productNameList.map((option) => {
+          const { label, value } = option;
+
+          return (
+            <Listbox.Option
+              key={`${value}`}
+              value={value}
+              selected={selectedOptions.includes(value)}
+              accessibilityLabel={label}
+            >
+              {label}
+            </Listbox.Option>
+          );
+        })
+      : null;
 
   return (
     <Page
@@ -421,7 +521,6 @@ export default function Hide_dynamic_payment_buttons() {
                     <Text variant="headingMd" as="h6">
                       Based on condition *
                     </Text>
-
                     <Box position="relative">
                       <Popover
                         active={popoverActive}
@@ -442,8 +541,8 @@ export default function Hide_dynamic_payment_buttons() {
                                 placeholder="Search"
                                 clearButton
                                 name="search"
-                                value={textFieldValues.search}
-                                onChange={handleTextFieldChanged}
+                                value={fieldValues.search}
+                                onChange={handleFieldChanged}
                                 onClearButtonClick={() => {}}
                               />
                             </Box>
@@ -485,57 +584,15 @@ export default function Hide_dynamic_payment_buttons() {
                       ></Box>
                     </Box>
 
-                    {/* {selectedBaseCundition.name === "Customer tag" && ( */}
                     <Box>
-                      <InlineStack wrap={false}>
-                        <Box width="30%" paddingInlineEnd="300">
-                          <Text variant="headingMd">Trigger *</Text>
-                          <Select
-                            options={triggerOptions}
-                            onChange={handleSelectChange}
-                            value={selected}
-                          />
-                        </Box>
-
-                        <Box width="70%">
-                          <InlineStack wrap={false} blockAlign="end">
-                            <Box width="100%">
-                              <Text variant="headingMd">Value *</Text>
-                              {/* <MultiComboboxExample /> */}
-
-                              <Combobox
-                                allowMultiple
-                                activator={
-                                  <Combobox.TextField
-                                    onChange={updateText}
-                                    label="Enter customer tag"
-                                    value={inputValue}
-                                    labelHidden
-                                    placeholder="Search tags"
-                                    autoComplete="off"
-                                  />
-                                }
-                              ></Combobox>
-                            </Box>
-                            <Box paddingInlineStart="100" minWidth="3.6rem">
-                              <Button
-                                disabled={!inputValue && true}
-                                variant="primary"
-                                onClick={() => updateSelection(inputValue)}
-                              >
-                                Add
-                              </Button>
-                            </Box>
-                          </InlineStack>
-                          <Box paddingBlock="200">
-                            <TextContainer>
-                              <LegacyStack>{tagsMarkup}</LegacyStack>
-                            </TextContainer>
-                          </Box>
-                        </Box>
-                      </InlineStack>
+                      <Based_condition_option
+                        selectedBaseCundition={selectedBaseCundition}
+                        triggerOptions={triggerOptions}
+                        handleSelectChange={handleSelectChange}
+                        selected={selected}
+                        productNameList={productNameList}
+                      />
                     </Box>
-                    {/* )} */}
                   </BlockStack>
                 </Card>
               ),
@@ -547,17 +604,8 @@ export default function Hide_dynamic_payment_buttons() {
   );
 }
 
-function MultiComboboxExample() {
-  let deselectedOptions = useMemo(
-    () =>
-      currency.map((currItem) => {
-        return {
-          value: currItem.name,
-          label: `${currItem.name} (${currItem.symbol})`,
-        };
-      }),
-    []
-  );
+function MultiCombobox({ StaticOptions }) {
+  let deselectedOptions = useMemo(() => StaticOptions, []);
 
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -567,7 +615,6 @@ function MultiComboboxExample() {
     (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
     []
   );
-
   const updateText = useCallback(
     (value) => {
       setInputValue(value);
@@ -635,8 +682,7 @@ function MultiComboboxExample() {
       : null;
 
   return (
-    <Box>
-      <Text variant="headingMd">Value *</Text>
+    <>
       <Combobox
         allowMultiple
         activator={
@@ -660,9 +706,12 @@ function MultiComboboxExample() {
           </Listbox>
         ) : null}
       </Combobox>
-      <TextContainer>
-        <LegacyStack>{tagsMarkup}</LegacyStack>
-      </TextContainer>
-    </Box>
+
+      <Box paddingBlock="200">
+        <TextContainer>
+          <LegacyStack>{tagsMarkup}</LegacyStack>
+        </TextContainer>
+      </Box>
+    </>
   );
 }
