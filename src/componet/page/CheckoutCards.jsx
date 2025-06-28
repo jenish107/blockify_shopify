@@ -210,7 +210,13 @@ export default function CheckoutCards() {
                       insetBlockEnd="200"
                       insetInlineStart="150"
                     >
-                      <Button>Create</Button>
+                      <Button
+                        onClick={() =>
+                          navigate("/Blockify-Checkout/Product_offer")
+                        }
+                      >
+                        Create
+                      </Button>
                     </Box>
                   </Box>
                 </BlockStack>
@@ -311,7 +317,13 @@ export default function CheckoutCards() {
                       insetBlockEnd="200"
                       insetInlineStart="150"
                     >
-                      <Button>Create</Button>
+                      <Button
+                        onClick={() =>
+                          navigate("/Blockify-Checkout/Product_offer")
+                        }
+                      >
+                        Create
+                      </Button>
                     </Box>
                   </Box>
                 </BlockStack>
@@ -408,7 +420,13 @@ export default function CheckoutCards() {
                       insetBlockEnd="200"
                       insetInlineStart="150"
                     >
-                      <Button>Create</Button>
+                      <Button
+                        onClick={() =>
+                          navigate("/Blockify-Checkout/Product_offer")
+                        }
+                      >
+                        Create
+                      </Button>
                     </Box>
                   </Box>
                 </BlockStack>
@@ -484,7 +502,13 @@ export default function CheckoutCards() {
                       insetBlockEnd="200"
                       insetInlineStart="150"
                     >
-                      <Button>Create</Button>
+                      <Button
+                        onClick={() =>
+                          navigate("/Blockify-Checkout/Product_offer")
+                        }
+                      >
+                        Create
+                      </Button>
                     </Box>
                   </Box>
                 </BlockStack>
@@ -523,7 +547,13 @@ export default function CheckoutCards() {
                     insetBlockEnd="200"
                     insetInlineStart="150"
                   >
-                    <Button>Create</Button>
+                    <Button
+                      onClick={() =>
+                        navigate("/Blockify-Checkout/Product_offer")
+                      }
+                    >
+                      Create
+                    </Button>
                   </Box>
                 </Box>
 

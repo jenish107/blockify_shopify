@@ -42,6 +42,7 @@ import { useNavigate } from "react-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Cundition_list from "./Cundition_list";
 import Cundition_set_box from "./Cundition_set_box";
+import Based_condition_option from "../Based_condition_option";
 
 const StaticBaseCunditionList = {
   "Most used conditions": [
@@ -131,40 +132,32 @@ const StaticBaseCunditionList = {
   ],
   Product: [
     {
-      img: " 📦",
-      isDisable: true,
+      img: "    📦",
       name: "Product",
-      content: "Based on selected product",
+      content: "Based on specific products in cart",
     },
     {
       img: "📦",
-      isDisable: true,
-      name: "Product price",
-      content: "Based on the price of product",
-    },
-    {
-      img: "🔖",
-      isDisable: true,
-      name: "Product tag",
-      content: "Based on product tag",
-    },
-    {
-      img: "📦",
-      isDisable: true,
-      name: "Product SKU",
-      content: "Based on product SKU",
+      name: "Product quantity",
+      content: "Based on specific product quantity added to the cart.",
     },
     {
       img: "🗳️",
-      isDisable: true,
       name: "Collection",
       content: "Based on the collection",
     },
     {
-      img: "📦",
-      isDisable: true,
-      name: "Product quantity",
-      content: "Based on specific product quantity added to the cart.",
+      img: "🗳️",
+      name: "Product quantity of collection",
+      content: "Based on the quantity of a collection's products in the cart.",
+    },
+    { img: "📦", name: "Product SKU", content: "Based on product SKU" },
+    { img: "🔖", name: "Product tag", content: "Based on product tag" },
+    { img: "👨‍💼", name: "Product vendor", content: "Based on product vendor" },
+    {
+      img: "🎉",
+      name: "Product is gift card",
+      content: "Validate if the product is gift card",
     },
   ],
   Market: [
@@ -338,6 +331,75 @@ const Cundition_set3 = {
   },
 };
 
+const productNameList = [
+  {
+    value: "The Inventory Not Tracked Snowboard",
+    label: "The Inventory Not Tracked Snowboard",
+  },
+  { value: "Gift Card", label: "Gift Card" },
+  {
+    value: "The Minimal Snowboard",
+    label: "The Minimal Snowboard",
+  },
+  {
+    value: "The Collection Snowboard: Hydrogen",
+    label: "The Collection Snowboard: Hydrogen",
+  },
+  {
+    value: "The Draft Snowboard",
+    label: "The Draft Snowboard",
+  },
+  {
+    value: "The Complete Snowboard",
+    label: "The Complete Snowboard",
+  },
+  {
+    value: "The Archived Snowboard",
+    label: "The Archived Snowboard",
+  },
+  {
+    value: "The Out of Stock Snowboard",
+    label: "The Out of Stock Snowboard",
+  },
+  {
+    value: "The Hidden Snowboard",
+    label: "The Hidden Snowboard",
+  },
+  {
+    value: "The Videographer Snowboard",
+    label: "The Videographer Snowboard",
+  },
+
+  {
+    value: "Selling Plans Ski Wax",
+    label: "Selling Plans Ski Wax",
+  },
+  {
+    value: "The Compare at Price Snowboard",
+    label: "The Compare at Price Snowboard",
+  },
+  {
+    value: "The Collection Snowboard: Oxygen",
+    label: "The Collection Snowboard: Oxygen",
+  },
+  {
+    value: "The Multi-location Snowboard",
+    label: "The Multi-location Snowboard",
+  },
+  {
+    value: "The Multi-managed Snowboard",
+    label: "The Multi-managed Snowboard",
+  },
+  {
+    value: "The 3p Fulfilled Snowboard",
+    label: "The 3p Fulfilled Snowboard",
+  },
+  {
+    value: "The Collection Snowboard: Liquid",
+    label: "The Collection Snowboard: Liquid",
+  },
+];
+
 export default function Create_checkout_rules() {
   const [selectedCundition, setSelectedCundition] = useState({
     value: Cundition_set1,
@@ -356,9 +418,15 @@ export default function Create_checkout_rules() {
   const [baseCunditionList, setBaseCunditionList] = useState(
     StaticBaseCunditionList
   );
+  const [triggerOptions, setTriggerOptions] = useState([
+    { value: "Is", label: "Is" },
+    { value: "Is not", label: "Is not" },
+  ]);
+
   const [selectedBaseCundition, setSelectedBaseCundition] = useState({
     key: "Most used conditions",
     index: 1,
+    name: "Cart total",
   });
 
   const navigate = useNavigate();
@@ -451,11 +519,12 @@ export default function Create_checkout_rules() {
     </Box>
   );
 
-  const handleSelectCunditonSet = (value, setName, name, index) => {
+  const handleSelectCunditonSet = (value, setName, key, index, name) => {
     setSelectedCundition({ value: value, setName: setName });
     setSelectedBaseCundition({
-      key: name,
+      key: key,
       index: index,
+      name: name,
     });
   };
 
@@ -471,8 +540,9 @@ export default function Create_checkout_rules() {
           )
         ) {
           return { ...currArray, isDisable: false };
+        } else {
+          return { ...currArray, isDisable: true };
         }
-        return currArray;
       });
 
       return [currItem[0], childTemp];
@@ -480,6 +550,88 @@ export default function Create_checkout_rules() {
 
     setBaseCunditionList(Object.fromEntries(temp));
   }, [selectedCundition]);
+
+  useEffect(() => {
+    switch (selectedBaseCundition.name) {
+      case "Customer tag":
+      case "Shopify market":
+      case "Currency":
+      case "Country":
+      case "Product tag":
+      case "Product":
+      case "Shipping address line 1":
+      case "Shipping address line 2":
+      case "Product SKU":
+      case "Missing house":
+        setTriggerOptions([
+          { value: "Is", label: "Is" },
+          { value: "Is not", label: "Is not" },
+        ]);
+        break;
+
+      case "Cart total":
+      case "Cart quantity":
+      case "Cart weight":
+      case "Select trigger":
+      case "Product price":
+        setTriggerOptions([
+          { value: "Select trigger", label: "Select trigger", disabled: true },
+          { value: "Equals", label: "Equals" },
+          { value: "Greater than", label: "Greater than" },
+          { value: "Less than", label: "Less than" },
+        ]);
+        break;
+
+      case "Cart contains products":
+      case "Cart contains collection":
+      case "Collection":
+      case "Product vendor":
+      case "Product is gift card":
+        setTriggerOptions([
+          { value: "Contains", label: "Contains" },
+          { value: "Does not contains", label: "Does not contains" },
+        ]);
+        break;
+
+      case "PO Box address":
+      case "Delivery company":
+      case "Zip code":
+        setTriggerOptions([
+          { value: "Select trigger", label: "Select trigger" },
+          { value: "Contains", label: "Contains" },
+          { value: "Not contains", label: "Not contains" },
+          {
+            value: "Count characters less than",
+            label: "Count characters less than",
+          },
+          {
+            value: "Count characters greater than",
+            label: "Count characters greater than",
+          },
+          { value: "Is", label: "Is" },
+          { value: "Is not", label: "Is not" },
+        ]);
+
+        break;
+
+      case "VAT number":
+        setTriggerOptions([
+          { value: "Select trigger", label: "Select trigger" },
+          { value: "Is", label: "Is" },
+        ]);
+        break;
+      case "Hour":
+        setTriggerOptions([
+          { value: "Select trigger", label: "Select trigger" },
+          { value: "Between", label: "Between" },
+        ]);
+        break;
+
+      default:
+        break;
+    }
+    // setTriggerOptions();
+  }, [selectedBaseCundition]);
 
   const handleSelectChange = useCallback((value) => setSelected(value), []);
   return (
@@ -554,7 +706,8 @@ export default function Create_checkout_rules() {
                                 Cundition_set1,
                                 "Cundition_set1",
                                 "Most used conditions",
-                                0
+                                0,
+                                "Cart total"
                               )
                             }
                           >
@@ -596,7 +749,8 @@ export default function Create_checkout_rules() {
                                 Cundition_set2,
                                 "Cundition_set2",
                                 "Customer",
-                                0
+                                0,
+                                "Customer phone number"
                               )
                             }
                           >
@@ -638,7 +792,8 @@ export default function Create_checkout_rules() {
                                 Cundition_set3,
                                 "Cundition_set3",
                                 "Most used conditions",
-                                0
+                                0,
+                                "Customer phone number"
                               )
                             }
                           >
@@ -726,55 +881,15 @@ export default function Create_checkout_rules() {
                         </Popover.Pane>
                       </Popover>
 
-                      <InlineStack blockAlign="start">
-                        <Box width="30%" paddingInlineEnd="300">
-                          <Select
-                            requiredIndicator
-                            label="Date range"
-                            options={[
-                              { label: "Is", value: "Is" },
-                              {
-                                label: "Select trigger",
-                                value: "Select trigger",
-                                disabled: true,
-                              },
-                              { label: "Contains", value: "Contains" },
-                              { label: "Not contains", value: "Not contains" },
-                              { label: "Is not", value: "Is not" },
-                              { label: "Regex (Beta)", value: "Regex (Beta)" },
-                            ]}
-                            onChange={handleSelectChange}
-                            value={selected}
-                          />
-                        </Box>
-
-                        <Box width="70%">
-                          <InlineStack wrap={false} blockAlign="end">
-                            <Box width="100%">
-                              <TextField
-                                label="Store name"
-                                name="store_name"
-                                placeholder="Enter email address"
-                                value={fieldValues.store_name}
-                                onChange={handleTextFieldChanged}
-                                onBlur={() =>
-                                  setIsStoreName(
-                                    fieldValues.store_name == "" && true
-                                  )
-                                }
-                                autoComplete="off"
-                                requiredIndicator
-                                error={isStoreName && "Store name is required"}
-                              />
-                            </Box>
-                            <Box minWidth="70px" paddingInlineStart="300">
-                              <Button disabled variant="primary">
-                                Add
-                              </Button>
-                            </Box>
-                          </InlineStack>
-                        </Box>
-                      </InlineStack>
+                      <Box>
+                        <Based_condition_option
+                          selectedBaseCundition={selectedBaseCundition}
+                          triggerOptions={triggerOptions}
+                          handleSelectChange={handleSelectChange}
+                          selected={selected}
+                          productNameList={productNameList}
+                        />
+                      </Box>
                     </BlockStack>
                   </Card>
 

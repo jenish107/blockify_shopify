@@ -35,13 +35,6 @@ export default function Cundition_list({
                   : undefined
               }
               key={index}
-              onClick={() =>
-                setSelectedBaseCundition({
-                  key: currKey,
-                  index: index,
-                  name: currItem.name,
-                })
-              }
             >
               <Box
                 padding="300"
@@ -50,26 +43,36 @@ export default function Cundition_list({
                 minHeight="100%"
                 onClick={() => togglePopoverActive(currKey, index)}
               >
-                <InlineStack align="space-between" blockAlign="center">
-                  <Box overflowX="hidden">
-                    <InlineStack gap="500">
-                      <Text variant="headingXl" as="h4">
-                        {currItem.img}
-                      </Text>
-                      <Box>
-                        <Text fontWeight="bold"> {currItem.name}</Text>
-                        <Text tone="subdued">{currItem.content}</Text>
-                      </Box>
-                    </InlineStack>
-                  </Box>
+                <Box
+                  onClick={() =>
+                    setSelectedBaseCundition({
+                      key: currKey,
+                      index: index,
+                      name: currItem.name,
+                    })
+                  }
+                >
+                  <InlineStack align="space-between" blockAlign="center">
+                    <Box overflowX="hidden">
+                      <InlineStack gap="500">
+                        <Text variant="headingXl" as="h4">
+                          {currItem.img}
+                        </Text>
+                        <Box>
+                          <Text fontWeight="bold"> {currItem.name}</Text>
+                          <Text tone="subdued">{currItem.content}</Text>
+                        </Box>
+                      </InlineStack>
+                    </Box>
 
-                  {selectedBaseCundition.key === currKey &&
-                    selectedBaseCundition.index == index && (
-                      <Text variant="headingMd" as="h5">
-                        ✅
-                      </Text>
-                    )}
-                </InlineStack>
+                    {selectedBaseCundition.key === currKey &&
+                      selectedBaseCundition.index == index && (
+                        <Text variant="headingMd" as="h5">
+                          ✅
+                        </Text>
+                      )}
+                  </InlineStack>
+                </Box>
               </Box>
               {!currItem.isDisable && (
                 <Box

@@ -33,8 +33,6 @@ import Slider from "react-slick";
 
 import "../../style/Pricing.css";
 
-import Header from "../Layout/Header";
-import Footer from "../Layout/Footer";
 import { useState } from "react";
 import SliderCard from "./inner_componet/SliderCard";
 

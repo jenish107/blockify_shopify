@@ -163,7 +163,6 @@ export default function Hide_dynamic_payment_buttons() {
   const [baseCunditionList, setBaseCunditionList] = useState(
     CommanBaseCunditionList
   );
- 
 
   const scrollRef = useRef(null);
   const navigate = useNavigate();
@@ -408,6 +407,8 @@ export default function Hide_dynamic_payment_buttons() {
       case "Cart contains products":
       case "Cart contains collection":
       case "Collection":
+      case "Product vendor":
+      case "Product is gift card":
         setTriggerOptions([
           { value: "Contains", label: "Contains" },
           { value: "Does not contains", label: "Does not contains" },
@@ -435,8 +436,6 @@ export default function Hide_dynamic_payment_buttons() {
     );
     setBaseCunditionList(Object.fromEntries(arrayBaseCundtion));
   }, [fieldValues.search]);
-
- 
 
   const optionsMarkup =
     productNameList.length > 0
